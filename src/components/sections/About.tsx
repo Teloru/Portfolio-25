@@ -171,7 +171,7 @@ const About: React.FC = () => {
               </ul>
             </details>
           </span>`,
-      width: 34,
+      width: 44,
     },
   ];
 

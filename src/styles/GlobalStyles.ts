@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&display=swap');
+
   :root {
     --highlight: #60a5fa;
     --highlight-hover: #93c5fd;
@@ -25,6 +27,14 @@ const GlobalStyles = createGlobalStyle`
 
   #root {
     height: 100%;
+  }
+
+  /* Font styling for paragraphs - Source Code Pro */
+  p {
+    font-family: 'Source Code Pro', 'Courier New', monospace;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.025em;
   }
 
   canvas {

@@ -69,7 +69,8 @@ const WindowHeader = styled.div`
     font-size: 0.9rem;
     color: #ffffff;
     font-weight: 600;
-    font-family: "Courier New", monospace;
+    font-family: "Source Code Pro", "Courier New", monospace;
+    letter-spacing: 0.025em;
   }
 `;
 
@@ -103,6 +104,9 @@ const WindowBody = styled.div`
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
   line-height: 1.6;
+  font-family: "Source Code Pro", "Courier New", monospace;
+  font-weight: 400;
+  letter-spacing: 0.025em;
 
   .highlight {
     color: #60a5fa;
