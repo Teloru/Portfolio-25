@@ -68,12 +68,12 @@ const bufferShader = `
    {
       // Mouse interaction
       float dist = length(iMouse.xy - coord);
-      d = smoothstep(8.0, 1.0, dist);
+      d = smoothstep(13.0, 1.0, dist);
    }
 
    // The actual propagation
    d += -(p11-.5)*2. + (p10 + p01 + p21 + p12 - 2.);
-   d *= .99; // dampening
+   d *= .98; // dampening
    d *= min(1.,float(iFrame)); // clear the buffer at iFrame == 0
    d = d*.5 + .5;
 
