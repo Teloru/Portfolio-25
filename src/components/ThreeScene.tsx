@@ -265,6 +265,10 @@ const ThreeScene: React.FC = () => {
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
     const mousePosition = new THREE.Vector4();
     let counter = 0;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let mouseMoving = false;
+    let mouseStopTimeout: NodeJS.Timeout | null = null;
 
     renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
@@ -315,16 +319,34 @@ const ThreeScene: React.FC = () => {
     // Update resolution
     uniforms.u_resolution.value.set(width, height);
 
-    // Mouse events - simpler approach, always track movement
+    // Mouse events - seulement pendant le mouvement
     const handleMouseMove = (event: MouseEvent) => {
-      // use directly clientX/Y without conversion
       const x = event.clientX;
       const y = event.clientY;
 
-      // Adjust for shader coordinate system (bottom-left)
-      mousePosition.setX(x);
-      mousePosition.setY(height - y);
-      mousePosition.setZ(1);
+      // check if mouse actually moved
+      if (x !== lastMouseX || y !== lastMouseY) {
+        mouseMoving = true;
+
+        // Reset stop timer
+        if (mouseStopTimeout) {
+          clearTimeout(mouseStopTimeout);
+        }
+
+        // Stop effect after 100ms of no movement
+        mouseStopTimeout = setTimeout(() => {
+          mouseMoving = false;
+          mousePosition.setZ(0); // Disable effect
+        }, 100) as any;
+
+        // Update position
+        mousePosition.setX(x);
+        mousePosition.setY(height - y);
+        mousePosition.setZ(1); // Enable effect
+
+        lastMouseX = x;
+        lastMouseY = y;
+      }
     };
 
     // Just track mouse movement
@@ -365,6 +387,11 @@ const ThreeScene: React.FC = () => {
     return () => {
       if (frameId.current) {
         cancelAnimationFrame(frameId.current);
+      }
+
+      // clean timeout
+      if (mouseStopTimeout) {
+        clearTimeout(mouseStopTimeout);
       }
 
       // Remove event listeners
