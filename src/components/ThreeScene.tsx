@@ -51,6 +51,7 @@ const bufferShader = `
    vec2 q = vUv;
    
    vec2 coord = q * iResolution.xy;
+   vec2 mouseCoord = vec2(iMouse.x, iResolution.y - iMouse.y);
 
    vec4 c = texture2D(iChannel0, q);
    
@@ -66,7 +67,8 @@ const bufferShader = `
    if (iMouse.z > 0.) 
    {
       // Mouse interaction
-      d = smoothstep(4.5,.5,length(iMouse.xy - coord));
+      float dist = length(iMouse.xy - coord);
+      d = smoothstep(8.0, 1.0, dist);
    }
 
    // The actual propagation
@@ -158,7 +160,10 @@ const fragmentShader = `
     vec2 squareUV1_i = floor(squareUV1);
     vec2 squareUV1_f = fract(squareUV1);
 
-    vec2 uv_img = squareUV1_i * gridSizeInverse;
+    // normalized UV to sample wave texture
+    vec2 normalGrid = uv * gridSize;
+    vec2 normalGrid_i = floor(normalGrid);
+    vec2 uv_img = normalGrid_i / gridSize;
     
     // Get wave data from buffer
     float h = texture2D(u_waveTexture, uv_img).x;
@@ -312,9 +317,14 @@ const ThreeScene: React.FC = () => {
 
     // Mouse events - simpler approach, always track movement
     const handleMouseMove = (event: MouseEvent) => {
-      mousePosition.setX(event.clientX);
-      mousePosition.setY(event.clientY);
-      mousePosition.setZ(1); // Always active when moving
+      // use directly clientX/Y without conversion
+      const x = event.clientX;
+      const y = event.clientY;
+
+      // Adjust for shader coordinate system (bottom-left)
+      mousePosition.setX(x);
+      mousePosition.setY(height - y);
+      mousePosition.setZ(1);
     };
 
     // Just track mouse movement
