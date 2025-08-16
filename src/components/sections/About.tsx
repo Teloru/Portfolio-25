@@ -228,7 +228,6 @@ const About: React.FC = () => {
               title={window.title}
               body={window.body}
               width={window.width}
-              // Convertir les positions px en vw/vh pour compatibilité
               x={(position.x / containerSize.width) * 100}
               y={(position.y / containerSize.height) * 100}
             />

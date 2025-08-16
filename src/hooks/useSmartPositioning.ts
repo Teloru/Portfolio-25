@@ -34,7 +34,7 @@ export const useSmartPositioning = (
       { x: 0, y: 0 }, // who-am-i
       { x: 1, y: 0 }, // hobbies
       { x: 0, y: 1 }, // twitch
-      { x: 1, y: 2 }, // collaboration
+      { x: 1, y: 1 }, // collaboration
       { x: 3, y: 0 }, // education
       { x: 3, y: 3 }, // coffee
       { x: 2, y: 1 }, // experiences

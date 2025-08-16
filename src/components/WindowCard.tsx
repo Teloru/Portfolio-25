@@ -225,7 +225,6 @@ const WindowCard: React.FC<WindowCardProps> = ({
         {
           scale: 0.2,
           opacity: 0,
-          rotateY: 45,
         },
         {
           scale: 1,
