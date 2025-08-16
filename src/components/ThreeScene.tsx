@@ -1,6 +1,31 @@
 import React, { useRef, useEffect, useMemo } from "react";
 import * as THREE from "three";
 
+// Helper function to create data texture
+function createDataTexture(width: number, height: number) {
+  const size = width * height;
+  const data = new Uint8Array(4 * size);
+
+  for (let i = 0; i < size; i++) {
+    const stride = i * 4;
+    if (Math.random() < 0.5) {
+      data[stride] = 255;
+      data[stride + 1] = 255;
+      data[stride + 2] = 255;
+      data[stride + 3] = 255;
+    } else {
+      data[stride] = 255;
+      data[stride + 1] = 255;
+      data[stride + 2] = 255;
+      data[stride + 3] = 255;
+    }
+  }
+
+  const texture = new THREE.DataTexture(data, width, height, THREE.RGBAFormat);
+  texture.needsUpdate = true;
+  return texture;
+}
+
 const vertexShader = `
   varying vec2 vUv;
   
@@ -10,82 +35,58 @@ const vertexShader = `
   }
 `;
 
+// Buffer shader for wave propagation
+const bufferShader = `
+  varying vec2 vUv;
+  uniform float iFrame;
+  uniform vec4 iMouse;
+  uniform vec3 iResolution;
+  uniform sampler2D iChannel0;
+  uniform sampler2D iChannel1;
+  uniform float iTime;
+
+  void main()
+  {
+   vec3 e = vec3(vec2(1.)/iResolution.xy,0.);
+   vec2 q = vUv;
+   
+   vec2 coord = q * iResolution.xy;
+   vec2 mouseCoord = vec2(iMouse.x, iResolution.y - iMouse.y);
+
+   vec4 c = texture2D(iChannel0, q);
+   
+   float p11 = c.x;
+   
+   float p10 = texture2D(iChannel1, q-e.zy).x;
+   float p01 = texture2D(iChannel1, q-e.xz).x;
+   float p21 = texture2D(iChannel1, q+e.xz).x;
+   float p12 = texture2D(iChannel1, q+e.zy).x;
+   
+   float d = 0.;
+    
+   if (iMouse.z > 0.) 
+   {
+      // Mouse interaction
+      float dist = length(iMouse.xy - coord);
+      d = smoothstep(13.0, 1.0, dist);
+   }
+
+   // The actual propagation
+   d += -(p11-.5)*2. + (p10 + p01 + p21 + p12 - 2.);
+   d *= .98; // dampening
+   d *= min(1.,float(iFrame)); // clear the buffer at iFrame == 0
+   d = d*.5 + .5;
+
+   gl_FragColor = vec4(d, 0, 0, 0);
+  }
+`;
+
 const fragmentShader = `
   uniform float u_time;
   uniform vec2 u_resolution;
+  uniform sampler2D u_waveTexture; // Wave texture from buffer
   
   varying vec2 vUv;
-
-  // Simplex noise functions
-  vec4 permute(vec4 x) {
-    return mod(((x * 34.0) + 1.0) * x, 289.0);
-  }
-  
-  vec4 taylorInvSqrt(vec4 r) {
-    return 1.79284291400159 - 0.85373472095314 * r;
-  }
-
-  float snoise(vec3 v) {
-    const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
-    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
-
-    // First corner
-    vec3 i = floor(v + dot(v, C.yyy));
-    vec3 x0 = v - i + dot(i, C.xxx);
-
-    // Other corners
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min(g.xyz, l.zxy);
-    vec3 i2 = max(g.xyz, l.zxy);
-
-    vec3 x1 = x0 - i1 + 1.0 * C.xxx;
-    vec3 x2 = x0 - i2 + 2.0 * C.xxx;
-    vec3 x3 = x0 - 1. + 3.0 * C.xxx;
-
-    // Permutations
-    i = mod(i, 289.0);
-    vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
-
-    // Gradients
-    float n_ = 1.0 / 7.0;
-    vec3 ns = n_ * D.wyz - D.xzx;
-
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_);
-
-    vec4 x = x_ * ns.x + ns.yyyy;
-    vec4 y = y_ * ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
-
-    vec4 b0 = vec4(x.xy, y.xy);
-    vec4 b1 = vec4(x.zw, y.zw);
-
-    vec4 s0 = floor(b0) * 2.0 + 1.0;
-    vec4 s1 = floor(b1) * 2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-
-    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-
-    vec3 p0 = vec3(a0.xy, h.x);
-    vec3 p1 = vec3(a0.zw, h.y);
-    vec3 p2 = vec3(a1.xy, h.z);
-    vec3 p3 = vec3(a1.zw, h.w);
-
-    // Normalise gradients
-    vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
-    p0 *= norm.x;
-    p1 *= norm.y;
-    p2 *= norm.z;
-    p3 *= norm.w;
-
-    // Mix final noise value
-    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
-  }
 
   // ASCII character shapes
   float sdOrientedBox(in vec2 p, in vec2 a, in vec2 b, float th) {
@@ -159,32 +160,96 @@ const fragmentShader = `
     vec2 squareUV1_i = floor(squareUV1);
     vec2 squareUV1_f = fract(squareUV1);
 
-    vec2 uv_img = squareUV1_i * gridSizeInverse;
-    uv_img.y *= ratio;
+    // normalized UV to sample wave texture
+    vec2 normalGrid = uv * gridSize;
+    vec2 normalGrid_i = floor(normalGrid);
+    vec2 uv_img = normalGrid_i / gridSize;
+    
+    // Get wave data from buffer
+    float h = texture2D(u_waveTexture, uv_img).x;
+    h -= 0.3;
 
-    // Base noise for grid animation
-    float noise = snoise(vec3(squareUV1_i * gridSizeInverse * 2.4, u_time * 0.05));
-    noise *= 0.7;
-    noise += 0.2;
-
-    float color = getGridColor(squareUV1_f, noise);
-    color *= 0.6;
+    // Use wave data instead of perlin noise
+    float color = getGridColor(squareUV1_f, h);
+    color *= 0.8; // Slightly brighter
 
     gl_FragColor = vec4(vec3(color), 1.0);
   }
 `;
 
+// Buffer management classes
+class BufferShader {
+  uniforms: { [key: string]: THREE.IUniform };
+  material: THREE.ShaderMaterial;
+  scene: THREE.Scene;
+
+  constructor(
+    fragmentShader: string,
+    uniforms: { [key: string]: THREE.IUniform } = {}
+  ) {
+    this.uniforms = uniforms;
+    this.material = new THREE.ShaderMaterial({
+      fragmentShader: fragmentShader,
+      vertexShader: vertexShader,
+      uniforms: uniforms,
+    });
+    this.scene = new THREE.Scene();
+    this.scene.add(
+      new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
+    );
+  }
+}
+
+class BufferManager {
+  renderer: THREE.WebGLRenderer;
+  readBuffer: THREE.WebGLRenderTarget;
+  writeBuffer: THREE.WebGLRenderTarget;
+
+  constructor(
+    renderer: THREE.WebGLRenderer,
+    size: { width: number; height: number }
+  ) {
+    this.renderer = renderer;
+
+    this.readBuffer = new THREE.WebGLRenderTarget(size.width, size.height, {
+      minFilter: THREE.LinearFilter,
+      magFilter: THREE.LinearFilter,
+      format: THREE.RGBAFormat,
+      type: THREE.FloatType,
+      stencilBuffer: false,
+    });
+
+    this.writeBuffer = this.readBuffer.clone();
+  }
+
+  swap() {
+    const temp = this.readBuffer;
+    this.readBuffer = this.writeBuffer;
+    this.writeBuffer = temp;
+  }
+
+  render(scene: THREE.Scene, camera: THREE.Camera, toScreen = false) {
+    if (toScreen) {
+      this.renderer.render(scene, camera);
+    } else {
+      this.renderer.setRenderTarget(this.writeBuffer);
+      this.renderer.clear();
+      this.renderer.render(scene, camera);
+      this.renderer.setRenderTarget(null);
+    }
+    this.swap();
+  }
+}
+
 const ThreeScene: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const frameId = useRef<number | null>(null);
 
   const uniforms = useMemo(
     () => ({
       u_time: { value: 0 },
       u_resolution: { value: new THREE.Vector2() },
+      u_waveTexture: { value: null as THREE.Texture | null },
     }),
     []
   );
@@ -192,62 +257,131 @@ const ThreeScene: React.FC = () => {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Setup renderer and camera
+    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const mousePosition = new THREE.Vector4();
+    let counter = 0;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let mouseMoving = false;
+    let mouseStopTimeout: NodeJS.Timeout | null = null;
+
+    renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Shader material
+    // Create buffer managers (ping-pong system)
+    const targetA = new BufferManager(renderer, { width, height });
+    const targetB = new BufferManager(renderer, { width, height });
+
+    // Create initial texture
+    const initialTexture = createDataTexture(width, height);
+    const resolution = new THREE.Vector3(
+      width,
+      height,
+      window.devicePixelRatio
+    );
+
+    // Create buffer shaders for wave propagation
+    const bufferA = new BufferShader(bufferShader, {
+      iFrame: { value: 0 },
+      iMouse: { value: mousePosition },
+      iResolution: { value: resolution },
+      iChannel0: { value: initialTexture },
+      iChannel1: { value: initialTexture },
+      iTime: { value: 0 },
+    });
+
+    const bufferB = new BufferShader(bufferShader, {
+      iFrame: { value: 0 },
+      iMouse: { value: mousePosition },
+      iResolution: { value: resolution },
+      iChannel0: { value: initialTexture },
+      iChannel1: { value: initialTexture },
+      iTime: { value: 0 },
+    });
+
+    // Create main display material
     const material = new THREE.ShaderMaterial({
       vertexShader,
       fragmentShader,
       uniforms,
     });
 
-    // Fullscreen quad
     const geometry = new THREE.PlaneGeometry(2, 2);
     const mesh = new THREE.Mesh(geometry, material);
+    const scene = new THREE.Scene();
     scene.add(mesh);
 
-    // Set refs
-    sceneRef.current = scene;
-    rendererRef.current = renderer;
-    materialRef.current = material;
-
     // Update resolution
-    uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+    uniforms.u_resolution.value.set(width, height);
+
+    // Mouse events - seulement pendant le mouvement
+    const handleMouseMove = (event: MouseEvent) => {
+      const x = event.clientX;
+      const y = event.clientY;
+
+      // check if mouse actually moved
+      if (x !== lastMouseX || y !== lastMouseY) {
+        mouseMoving = true;
+
+        // Reset stop timer
+        if (mouseStopTimeout) {
+          clearTimeout(mouseStopTimeout);
+        }
+
+        // Stop effect after 100ms of no movement
+        mouseStopTimeout = setTimeout(() => {
+          mouseMoving = false;
+          mousePosition.setZ(0); // Disable effect
+        }, 100) as any;
+
+        // Update position
+        mousePosition.setX(x);
+        mousePosition.setY(height - y);
+        mousePosition.setZ(1); // Enable effect
+
+        lastMouseX = x;
+        lastMouseY = y;
+      }
+    };
+
+    // Just track mouse movement
+    window.addEventListener("mousemove", handleMouseMove);
 
     // Animation loop
-    const animate = (time: number) => {
-      if (materialRef.current) {
-        materialRef.current.uniforms.u_time.value = time * 0.001;
-      }
+    const animate = () => {
+      counter += 0.1;
 
-      if (rendererRef.current && sceneRef.current) {
-        rendererRef.current.render(sceneRef.current, camera);
-      }
+      // Update buffer shaders
+      bufferA.uniforms["iFrame"].value = counter;
+      bufferB.uniforms["iFrame"].value = counter;
+      bufferA.uniforms["iTime"].value = counter;
+      bufferB.uniforms["iTime"].value = counter;
+
+      // Ping-pong rendering
+      bufferA.uniforms["iChannel0"].value = targetA.readBuffer.texture;
+      bufferA.uniforms["iChannel1"].value = targetB.readBuffer.texture;
+      targetA.render(bufferA.scene, camera);
+
+      bufferB.uniforms["iChannel0"].value = targetB.readBuffer.texture;
+      bufferB.uniforms["iChannel1"].value = targetA.readBuffer.texture;
+      targetB.render(bufferB.scene, camera);
+
+      // Update main shader with wave texture
+      uniforms.u_waveTexture.value = targetA.readBuffer.texture;
+      uniforms.u_time.value = counter * 0.001;
+
+      // Render final scene
+      renderer.render(scene, camera);
 
       frameId.current = requestAnimationFrame(animate);
     };
 
     frameId.current = requestAnimationFrame(animate);
-
-    // Handle resize
-    const handleResize = () => {
-      if (rendererRef.current && materialRef.current) {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        rendererRef.current.setSize(width, height);
-        materialRef.current.uniforms.u_resolution.value.set(width, height);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
 
     // Cleanup
     return () => {
@@ -255,15 +389,26 @@ const ThreeScene: React.FC = () => {
         cancelAnimationFrame(frameId.current);
       }
 
-      window.removeEventListener("resize", handleResize);
+      // clean timeout
+      if (mouseStopTimeout) {
+        clearTimeout(mouseStopTimeout);
+      }
+
+      // Remove event listeners
+      window.removeEventListener("mousemove", handleMouseMove);
 
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
 
+      // Dispose resources
       geometry.dispose();
       material.dispose();
       renderer.dispose();
+      targetA.readBuffer.dispose();
+      targetA.writeBuffer.dispose();
+      targetB.readBuffer.dispose();
+      targetB.writeBuffer.dispose();
     };
   }, [uniforms]);
 
