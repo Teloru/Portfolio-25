@@ -46,7 +46,8 @@ const ShuffleButton = styled.button<{ $isShuffling: boolean }>`
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.8rem;
-  font-family: "Courier New", monospace;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   transition: all 0.3s ease;
 
   &:hover {

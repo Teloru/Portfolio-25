@@ -16,6 +16,9 @@ const Title = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.1;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled.p`
@@ -23,6 +26,9 @@ const Subtitle = styled.p`
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 2rem;
   font-weight: 300;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  letter-spacing: -0.01em;
 `;
 
 const Description = styled.p`
