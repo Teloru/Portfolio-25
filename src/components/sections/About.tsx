@@ -74,60 +74,104 @@ const About: React.FC = () => {
   const windowsData = [
     {
       title: "who-am-i",
-      body: `Salut ! Je suis Astrid. Actuellement en tant que <span class="highlight">développeuse frontend</span> passionnée par les expériences 3D.<br/>Basée à Marseille, France.`,
+      body: `Welcome! I’m Astrid. Currently working as a <span class="highlight">3D software engineer</span> <a href="https://h3d.ai" target="_blank" style="color: #d9d9dd;">@h3d</a><br /> Based in Marseille, France.`,
       width: 25,
     },
     {
-      title: "passions",
-      body: `Passionnée par tout ce qui touche à la <span class="highlight">tech</span> et à la <span class="highlight">3D</span>.<ol style="margin-left: 1rem"><li>Three.js & WebGL</li><li>React & TypeScript</li><li>Animation & GSAP</li><li>UI/UX Design</li><li>Gaming & VR</li></ol>`,
+      title: "hobbies",
+      body: `Passionate about all things <span class="highlight">tech</span> and <span class="highlight">3D</span>.<ol style="margin-left: 1rem"><li>VR/AR</li><li>drones</li><li>digital art</li><li>music</li><li>y2k video games</li></ol>`,
       width: 18,
     },
     {
-      title: "projets",
-      body: `Mes projets récents incluent des <span class="highlight">portfolios interactifs</span>, des <span class="highlight">visualisations 3D</span> et des <span class="highlight">applications web modernes</span> avec React.`,
+      title: "twitch.tv",
+      body: `Occasional streams on my <a href="https://www.twitch.tv/teloru" target="_blank" style="text-decoration: none;"><span class="highlight">Twitch</span></a> channel-- Come take a look! #sega #atlus #jrpg`,
       width: 20,
     },
     {
       title: "collaboration",
-      body: `Ouverte aux opportunités de <span class="highlight">travail remote</span>.<br/><br/>Spécialisée en <span class="highlight">React</span>, <span class="highlight">TypeScript</span>, <span class="highlight">Three.js</span> et <span class="highlight">GSAP</span>.<br/><br/>Toujours partante pour collaborer sur des projets créatifs !`,
+      body: `Open to <span class="highlight">remote</span> work opportunities.<br /><br />Eager to contribute to research projects in <span class="highlight">real time rendering</span>.<br /><br />I specialize in <span class="highlight">C++</span> and <span class="highlight">JS</span>/<span class="highlight">TS</span> (React & Vue, ThreeJS, BabylonJS).`,
       width: 21,
     },
     {
-      title: "formation",
+      title: "education",
       body: `<span style="display: flex; flex-direction: column;">
-        <span style="color: var(--highlight); font-size: 0.9rem; margin-bottom: 0.5rem;">Formation Autodidacte</span>
-        <span style="display: flex; justify-content: space-between">
-          <span>Frontend Development</span>
-          <span>2020-2024</span>
-        </span>
-        <span style="margin-left: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.7)">React, TypeScript, Three.js, GSAP</span>
-        
-        <br/>
-        <span style="display: flex; justify-content: space-between">
-          <span>Développement Web</span>
-          <span>2019-2024</span>
-        </span>
-        <span style="margin-left: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.7)">JavaScript, CSS, HTML, Git</span>
-      </span>`,
+          <span style="color: var(--highlight); font-size: 0.9rem; margin-bottom: 0.5rem;">@Aix-Marseille University</span>
+          <a style="color:#d9d9d9;" href="https://sciences.univ-amu.fr/en/node/598" target="_blank">
+          <span style="display: flex; justify-content: space-between">
+            <span>MS in Computer Science</span>
+            <span>2024</span></a>
+          </span>
+          <span style="margin-left: 2rem; font-size: 0.65rem">Specialization: Computer Graphics and Applied Geometry</span>
+
+          <a style="color:#d9d9d9;" href="https://sciences.univ-amu.fr/en/study-program/bachelor-degree/informatics" target="_blank">
+          <span style="display: flex; justify-content: space-between">
+            <span>BS in Computer Science</span>
+            <span>2022</span></a>
+          </span>
+          <span style="margin-left: 2rem; font-size: 0.65rem">Major: GPU Progamming | Minor: Human-Machine Interface</span>
+
+
+          <a style="color:#d9d9d9;" href="https://iut.univ-amu.fr/en/study-programs/university-bachelor-of-technology/but-computing/but-computing-aix" target="_blank">
+          <span style="display: flex; justify-content: space-between">
+            <span>Associate Degree in Computer Science</span>
+            <span>2020</span></a>
+          </span>
+          <span style="margin-left: 2rem; font-size: 0.65rem">Specialization: Software development, UNIX, Qt</span></span>`,
       width: 28,
     },
     {
-      title: "technologies",
-      body: `<span style="display: flex; flex-direction: column; gap: 0.8rem;">
-        <div>
-          <span class="highlight">Frontend:</span> React, TypeScript, Styled Components, GSAP
-        </div>
-        <div>
-          <span class="highlight">3D/Graphics:</span> Three.js, WebGL, Shaders GLSL
-        </div>
-        <div>
-          <span class="highlight">Tools:</span> Vite, Git, VS Code, Figma
-        </div>
-        <div>
-          <span class="highlight">Interests:</span> WebXR, Creative Coding, UI Animation
-        </div>
-      </span>`,
+      title: "grab-a-coffee",
+      body: `I make free templates (discord, Notion) on my <a href="https://www.ko-fi.com/teloru" target="_blank" style="text-decoration: none;"><span class="highlight">Ko-fi page</span></a>- if you wanna grab a coffee with me feel free to visit my page :)`,
       width: 24,
+    },
+    {
+      title: "experiences",
+      body: `<span style="display: flex; flex-direction: column;">
+          <span style="display: flex; justify-content: space-between">
+          <span>SE intern <span class="highlight">@dassaultSystemes</span>, Aix-en-Provence, Fr</span>
+          <span>apr. 2024 - sep. 2024</span></a></span>
+          <span style="margin-left: 0.5rem; font-size: 0.65rem">
+            
+            <details class="toggle">
+              <summary>Joined the Additive Manufacturing team; [software engineering] <span class="chevron"></span></summary>
+              <ul>
+                <li>Designed a G-code export feature compatible with multiple 3D printer models, enhancing workflow efficiency for both domestic and industrial users.</li>
+                <li>Implemented a flexible UI, enabling users to define machine-specific printing parameters, improving customization and UX.</li>
+                <li>Integrated the solution with high-end 3D printers (Ultimaker, Raise3D), coordinated remote testing with a team in Vélizy.</li>
+                <li>Collaborated within an Agile Scrum team</li>
+              </ul>
+            </details>
+          </span>
+        <br/>
+        <span style="display: flex; justify-content: space-between">
+          <span>CG researcher intern <span class="highlight">@LIS lab</span>, Marseille, Fr</span>
+          <span>apr. 2023 - jun. 2023</span></a></span>
+          <span style="margin-left: 0.5rem; font-size: 0.65rem">    
+            <details class="toggle">
+              <summary>Joined the G-Mod team; [research]<span class="chevron"></span></summary>
+              Optimized topological extraction scripts on 3D shapes using the TTK library. My work focused on improving compatibility with various 3D file formats and integrating segmentation filters.
+              <ul>
+              <li>Added support for STL and PLY formats, enhancing script flexibility.</li>
+              <li>Implemented topological filters, improving mesh processing efficiency by 20%.</li>
+              <li>Refactored C++ code, reducing compatibility errors by 30%.</li>
+              </ul>
+            </details>
+          </span>
+
+        <br/>
+          <span style="display: flex; justify-content: space-between">
+          <span>CMS developer intern <span class="highlight">@iconik</span>, La Ciotat, Fr</span>
+          <span>apr. 2022 - aug. 2022</span></a></span>
+          <span style="margin-left: 0.5rem; font-size: 0.65rem">
+          <details class="toggle">
+            <summary>Joined the Communication team; [VR video game]<span class="chevron"></span></summary>
+              <ul>
+                <li>Led the development of Iconik's website, reducing page load time by 25% through optimized code and content delivery strategies.</li>
+                <li>Assisted in the launch of a new service.</li>
+              </ul>
+            </details>
+          </span>`,
+      width: 34,
     },
   ];
 

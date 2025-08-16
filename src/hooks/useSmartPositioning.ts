@@ -31,12 +31,13 @@ export const useSmartPositioning = (
 
     // template grid for each window (logical (positions) - 4x3 asymmetric grid
     const gridPositions = [
-      { x: 1, y: 0 }, // who-am-i (haut gauche)
-      { x: 2, y: 0 }, // passions (haut droite)
-      { x: 0, y: 1 }, // projets (centre gauche)
-      { x: 0, y: 2 }, // collaboration (bas gauche)
-      { x: 2, y: 1 }, // formation (haut centre-droite)
-      { x: 3, y: 2 }, // technologies (bas droite)
+      { x: 0, y: 0 }, // who-am-i
+      { x: 1, y: 0 }, // hobbies
+      { x: 0, y: 1 }, // twitch
+      { x: 1, y: 2 }, // collaboration
+      { x: 3, y: 0 }, // education
+      { x: 3, y: 3 }, // coffee
+      { x: 2, y: 1 }, // experiences
     ];
 
     // get grid position based for this window

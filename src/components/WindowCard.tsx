@@ -3,7 +3,6 @@ import styled from "styled-components";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 
-// Enregistrer le plugin Draggable
 gsap.registerPlugin(Draggable);
 
 interface WindowCardProps {
