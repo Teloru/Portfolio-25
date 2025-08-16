@@ -6,6 +6,7 @@ import Hero from "./sections/Hero";
 import About from "./sections/About";
 import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
+import Footer from "./sections/Footer";
 
 // save plugin ScrollTo
 gsap.registerPlugin(ScrollToPlugin);
@@ -154,6 +155,7 @@ const Portfolio: React.FC = () => {
       <Section>
         <Contact />
       </Section>
+      <Footer />
     </PortfolioContainer>
   );
 };
