@@ -34,7 +34,7 @@ export const useSmartPositioning = (
       { x: 0, y: 0 }, // who-am-i
       { x: 1, y: 0 }, // hobbies
       { x: 0, y: 1 }, // twitch
-      { x: 1, y: 1 }, // collaboration
+      { x: 0, y: 2 }, // collaboration
       { x: 3, y: 0 }, // education
       { x: 3, y: 3 }, // coffee
       { x: 2, y: 1 }, // experiences
@@ -64,16 +64,31 @@ export const useSmartPositioning = (
     const availableCellWidth = cellWidth - cellPadding * 2;
     const availableCellHeight = cellHeight - cellPadding * 2;
 
-    // centered position in cell with a bit of randomness
-    const randomOffsetX =
-      (Math.random() - 0.5) * Math.min(60, availableCellWidth * 0.3);
-    const randomOffsetY =
-      (Math.random() - 0.5) * Math.min(40, availableCellHeight * 0.3);
+    // Increased randomness for more natural "messy" look
+    // Some windows get more chaos than others
+    const chaosLevel = windowIndex % 3 === 0 ? 1.5 : 1; // Every 3rd window gets more chaos
+    const maxOffsetX = Math.min(120, availableCellWidth * 0.5) * chaosLevel;
+    const maxOffsetY = Math.min(80, availableCellHeight * 0.4) * chaosLevel;
 
-    const centerX =
-      baseCellX + cellWidth / 2 - windowWidthPx / 2 + randomOffsetX;
-    const centerY =
-      baseCellY + cellHeight / 2 - windowHeightPx / 2 + randomOffsetY;
+    const randomOffsetX = (Math.random() - 0.5) * maxOffsetX;
+    const randomOffsetY = (Math.random() - 0.5) * maxOffsetY;
+
+    // Sometimes break out of grid boundaries for more organic feel
+    const breakoutChance = 0.3; // 30% chance to break out
+    const shouldBreakout = Math.random() < breakoutChance;
+    
+    let centerX, centerY;
+    
+    if (shouldBreakout) {
+      // Allow windows to wander between cells
+      const cellBreakoutX = (Math.random() - 0.5) * cellWidth * 0.6;
+      const cellBreakoutY = (Math.random() - 0.5) * cellHeight * 0.4;
+      centerX = baseCellX + cellWidth / 2 - windowWidthPx / 2 + randomOffsetX + cellBreakoutX;
+      centerY = baseCellY + cellHeight / 2 - windowHeightPx / 2 + randomOffsetY + cellBreakoutY;
+    } else {
+      centerX = baseCellX + cellWidth / 2 - windowWidthPx / 2 + randomOffsetX;
+      centerY = baseCellY + cellHeight / 2 - windowHeightPx / 2 + randomOffsetY;
+    }
 
     // make sure the window stays within the screen bounds
     const finalX = Math.max(
@@ -85,25 +100,34 @@ export const useSmartPositioning = (
       Math.min(centerY, containerHeight - windowHeightPx - margin)
     );
 
-    // check for collision with existing windows
-    const hasCollision = existingPositions.some(({ pos, data }) => {
+    // Allow partial overlaps for more natural look
+    // Only prevent major collisions (>60% overlap)
+    const hasSignificantCollision = existingPositions.some(({ pos, data }) => {
       const existingWidthPx = (data.width / 100) * containerWidth;
       const existingHeightPx = data.height;
-      const buffer = 20; // min buffer to avoid collision
-
-      return (
-        finalX < pos.x + existingWidthPx + buffer &&
-        finalX + windowWidthPx > pos.x - buffer &&
-        finalY < pos.y + existingHeightPx + buffer &&
-        finalY + windowHeightPx > pos.y - buffer
-      );
+      
+      // Calculate overlap area
+      const overlapX = Math.max(0, Math.min(finalX + windowWidthPx, pos.x + existingWidthPx) - Math.max(finalX, pos.x));
+      const overlapY = Math.max(0, Math.min(finalY + windowHeightPx, pos.y + existingHeightPx) - Math.max(finalY, pos.y));
+      const overlapArea = overlapX * overlapY;
+      
+      // Calculate percentage of overlap relative to smaller window
+      const currentWindowArea = windowWidthPx * windowHeightPx;
+      const existingWindowArea = existingWidthPx * existingHeightPx;
+      const smallerWindowArea = Math.min(currentWindowArea, existingWindowArea);
+      
+      const overlapPercentage = overlapArea / smallerWindowArea;
+      
+      // Only consider it a "collision" if overlap is more than 60%
+      return overlapPercentage > 0.6;
     });
 
-    // if collision, try with variations around the position
-    if (hasCollision) {
-      for (let attempt = 0; attempt < 10; attempt++) {
-        const offsetX = (Math.random() - 0.5) * 120;
-        const offsetY = (Math.random() - 0.5) * 80;
+    // if significant collision, try with smaller variations to find a good spot
+    if (hasSignificantCollision) {
+      for (let attempt = 0; attempt < 8; attempt++) {
+        // Smaller, more subtle adjustments
+        const offsetX = (Math.random() - 0.5) * 80;
+        const offsetY = (Math.random() - 0.5) * 60;
 
         const adjustedX = Math.max(
           margin,
@@ -114,20 +138,23 @@ export const useSmartPositioning = (
           Math.min(centerY + offsetY, containerHeight - windowHeightPx - margin)
         );
 
-        const stillHasCollision = existingPositions.some(({ pos, data }) => {
+        const stillHasSignificantCollision = existingPositions.some(({ pos, data }) => {
           const existingWidthPx = (data.width / 100) * containerWidth;
           const existingHeightPx = data.height;
-          const buffer = 20;
-
-          return (
-            adjustedX < pos.x + existingWidthPx + buffer &&
-            adjustedX + windowWidthPx > pos.x - buffer &&
-            adjustedY < pos.y + existingHeightPx + buffer &&
-            adjustedY + windowHeightPx > pos.y - buffer
-          );
+          
+          const overlapX = Math.max(0, Math.min(adjustedX + windowWidthPx, pos.x + existingWidthPx) - Math.max(adjustedX, pos.x));
+          const overlapY = Math.max(0, Math.min(adjustedY + windowHeightPx, pos.y + existingHeightPx) - Math.max(adjustedY, pos.y));
+          const overlapArea = overlapX * overlapY;
+          
+          const currentWindowArea = windowWidthPx * windowHeightPx;
+          const existingWindowArea = existingWidthPx * existingHeightPx;
+          const smallerWindowArea = Math.min(currentWindowArea, existingWindowArea);
+          
+          const overlapPercentage = overlapArea / smallerWindowArea;
+          return overlapPercentage > 0.6;
         });
 
-        if (!stillHasCollision) {
+        if (!stillHasSignificantCollision) {
           return { x: adjustedX, y: adjustedY };
         }
       }

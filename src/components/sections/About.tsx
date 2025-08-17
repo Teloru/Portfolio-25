@@ -103,14 +103,14 @@ const About: React.FC = () => {
             <span>MS in Computer Science</span>
             <span>2024</span></a>
           </span>
-          <span style="margin-left: 2rem; font-size: 0.65rem">Specialization: Computer Graphics and Applied Geometry</span>
+          <span style="margin-left: 2rem; font-size: 0.75rem">Specialization: Computer Graphics and Applied Geometry</span>
 
           <a style="color:#d9d9d9;" href="https://sciences.univ-amu.fr/en/study-program/bachelor-degree/informatics" target="_blank">
           <span style="display: flex; justify-content: space-between">
             <span>BS in Computer Science</span>
             <span>2022</span></a>
           </span>
-          <span style="margin-left: 2rem; font-size: 0.65rem">Major: GPU Progamming | Minor: Human-Machine Interface</span>
+          <span style="margin-left: 2rem; font-size: 0.75rem">Major: GPU Progamming | Minor: Human-Machine Interface</span>
 
 
           <a style="color:#d9d9d9;" href="https://iut.univ-amu.fr/en/study-programs/university-bachelor-of-technology/but-computing/but-computing-aix" target="_blank">
@@ -118,12 +118,12 @@ const About: React.FC = () => {
             <span>Associate Degree in Computer Science</span>
             <span>2020</span></a>
           </span>
-          <span style="margin-left: 2rem; font-size: 0.65rem">Specialization: Software development, UNIX, Qt</span></span>`,
+          <span style="margin-left: 2rem; font-size: 0.75rem">Specialization: Software development, UNIX, Qt</span></span>`,
       width: 28,
     },
     {
       title: "grab-a-coffee",
-      body: `I make free templates (discord, Notion) on my <a href="https://www.ko-fi.com/teloru" target="_blank" style="text-decoration: none;"><span style="color: var(--highlight);">Ko-fi page</span></a>- if you wanna grab a coffee with me feel free to visit my page :)`,
+      body: `I make free templates (discord, Notion) on my <a href="https://www.ko-fi.com/teloru" target="_blank" style="text-decoration: none;"><span style="color: var(--highlight);">Ko-fi page</span></a>- if you wanna grab me a coffee feel free to visit my page :)`,
       width: 24,
     },
     {
@@ -132,7 +132,7 @@ const About: React.FC = () => {
           <span style="display: flex; justify-content: space-between">
           <span>SE intern <span style="color: var(--highlight);">@dassaultSystemes</span>, Aix-en-Provence, Fr</span>
           <span>apr. 2024 - sep. 2024</span></a></span>
-          <span style="margin-left: 0.5rem; font-size: 0.65rem">
+          <span style="margin-left: 0.5rem;">
             
             <details class="toggle">
               <summary>Joined the Additive Manufacturing team; [software engineering] <span class="chevron"></span></summary>
@@ -148,7 +148,7 @@ const About: React.FC = () => {
         <span style="display: flex; justify-content: space-between">
           <span>CG researcher intern <span style="color: var(--highlight);">@LIS lab</span>, Marseille, Fr</span>
           <span>apr. 2023 - jun. 2023</span></a></span>
-          <span style="margin-left: 0.5rem; font-size: 0.65rem">    
+          <span style="margin-left: 0.5rem;">    
             <details class="toggle">
               <summary>Joined the G-Mod team; [research]<span class="chevron"></span></summary>
               Optimized topological extraction scripts on 3D shapes using the TTK library. My work focused on improving compatibility with various 3D file formats and integrating segmentation filters.
@@ -164,7 +164,7 @@ const About: React.FC = () => {
           <span style="display: flex; justify-content: space-between">
           <span>CMS developer intern <span style="color: var(--highlight);">@iconik</span>, La Ciotat, Fr</span>
           <span>apr. 2022 - aug. 2022</span></a></span>
-          <span style="margin-left: 0.5rem; font-size: 0.65rem">
+          <span style="margin-left: 0.5rem;">
           <details class="toggle">
             <summary>Joined the Communication team; [VR video game]<span class="chevron"></span></summary>
               <ul>

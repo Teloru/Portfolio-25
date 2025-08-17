@@ -89,9 +89,7 @@ const CloseButton = styled.button`
   &:before {
     content: "×";
     position: absolute;
-    top: -2px;
-    left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     color: white;
     font-size: 12px;
     font-weight: bold;
