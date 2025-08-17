@@ -5,11 +5,11 @@ const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
   :root {
-    --highlight: #60a5fa;
-    --highlight-hover: #93c5fd;
+    --highlight: #beaae8;
+    --highlight-hover: #beaae8;
     --window-bg: rgba(20, 20, 25, 0.95);
     --window-border: rgba(255, 255, 255, 0.2);
-    --window-border-focus: rgba(96, 165, 250, 0.6);
+    --window-border-focus: rgba(244, 220, 249, 0.6);
   }
 
   * {

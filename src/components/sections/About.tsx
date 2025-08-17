@@ -70,27 +70,28 @@ const About: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [isShuffling, setIsShuffling] = useState(false);
+  const [focusedWindow, setFocusedWindow] = useState<string>("");
 
   // windows data
   const windowsData = [
     {
       title: "who-am-i",
-      body: `Welcome! I’m Astrid. Currently working as a <span class="highlight">3D software engineer</span> <a href="https://h3d.ai" target="_blank" style="color: #d9d9dd;">@h3d</a><br /> Based in Marseille, France.`,
+      body: `Welcome! I’m Astrid. Currently working as a <span style="color: var(--highlight);">3D software engineer</span> <a href="https://h3d.ai" target="_blank" style="color: #d9d9dd;">@h3d</a><br /> Based in Marseille, France.`,
       width: 25,
     },
     {
       title: "hobbies",
-      body: `Passionate about all things <span class="highlight">tech</span> and <span class="highlight">3D</span>.<ol style="margin-left: 1rem"><li>VR/AR</li><li>drones</li><li>digital art</li><li>music</li><li>y2k video games</li></ol>`,
+      body: `Passionate about all things <span style="color: var(--highlight);">tech</span> and <span style="color: var(--highlight);">3D</span>.<ol style="margin-left: 1rem"><li>VR/AR</li><li>drones</li><li>digital art</li><li>music</li><li>y2k video games</li></ol>`,
       width: 18,
     },
     {
       title: "twitch.tv",
-      body: `Occasional streams on my <a href="https://www.twitch.tv/teloru" target="_blank" style="text-decoration: none;"><span class="highlight">Twitch</span></a> channel-- Come take a look! #sega #atlus #jrpg`,
+      body: `Occasional streams on my <a href="https://www.twitch.tv/teloru" target="_blank" style="text-decoration: none;"><span style="color: var(--highlight);">Twitch</span></a> channel-- Come take a look! #sega #atlus #jrpg`,
       width: 20,
     },
     {
       title: "collaboration",
-      body: `Open to <span class="highlight">remote</span> work opportunities.<br /><br />Eager to contribute to research projects in <span class="highlight">real time rendering</span>.<br /><br />I specialize in <span class="highlight">C++</span> and <span class="highlight">JS</span>/<span class="highlight">TS</span> (React & Vue, ThreeJS, BabylonJS).`,
+      body: `Open to <span style="color: var(--highlight);">remote</span> work opportunities.<br /><br />Eager to contribute to research projects in <span style="color: var(--highlight);">real time rendering</span>.<br /><br />I specialize in <span style="color: var(--highlight);">C++</span> and <span style="color: var(--highlight);">JS</span>/<span style="color: var(--highlight);">TS</span> (React & Vue, ThreeJS, BabylonJS).`,
       width: 21,
     },
     {
@@ -122,14 +123,14 @@ const About: React.FC = () => {
     },
     {
       title: "grab-a-coffee",
-      body: `I make free templates (discord, Notion) on my <a href="https://www.ko-fi.com/teloru" target="_blank" style="text-decoration: none;"><span class="highlight">Ko-fi page</span></a>- if you wanna grab a coffee with me feel free to visit my page :)`,
+      body: `I make free templates (discord, Notion) on my <a href="https://www.ko-fi.com/teloru" target="_blank" style="text-decoration: none;"><span style="color: var(--highlight);">Ko-fi page</span></a>- if you wanna grab a coffee with me feel free to visit my page :)`,
       width: 24,
     },
     {
       title: "experiences",
       body: `<span style="display: flex; flex-direction: column;">
           <span style="display: flex; justify-content: space-between">
-          <span>SE intern <span class="highlight">@dassaultSystemes</span>, Aix-en-Provence, Fr</span>
+          <span>SE intern <span style="color: var(--highlight);">@dassaultSystemes</span>, Aix-en-Provence, Fr</span>
           <span>apr. 2024 - sep. 2024</span></a></span>
           <span style="margin-left: 0.5rem; font-size: 0.65rem">
             
@@ -145,7 +146,7 @@ const About: React.FC = () => {
           </span>
         <br/>
         <span style="display: flex; justify-content: space-between">
-          <span>CG researcher intern <span class="highlight">@LIS lab</span>, Marseille, Fr</span>
+          <span>CG researcher intern <span style="color: var(--highlight);">@LIS lab</span>, Marseille, Fr</span>
           <span>apr. 2023 - jun. 2023</span></a></span>
           <span style="margin-left: 0.5rem; font-size: 0.65rem">    
             <details class="toggle">
@@ -161,7 +162,7 @@ const About: React.FC = () => {
 
         <br/>
           <span style="display: flex; justify-content: space-between">
-          <span>CMS developer intern <span class="highlight">@iconik</span>, La Ciotat, Fr</span>
+          <span>CMS developer intern <span style="color: var(--highlight);">@iconik</span>, La Ciotat, Fr</span>
           <span>apr. 2022 - aug. 2022</span></a></span>
           <span style="margin-left: 0.5rem; font-size: 0.65rem">
           <details class="toggle">
@@ -192,6 +193,11 @@ const About: React.FC = () => {
     }, 600);
   };
 
+  // function to handle window focus
+  const handleWindowFocus = (windowId: string) => {
+    setFocusedWindow(windowId);
+  };
+
   // measure container size
   useEffect(() => {
     const updateSize = () => {
@@ -204,6 +210,23 @@ const About: React.FC = () => {
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  // handle clicking outside of windows to remove focus
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !event.target) return;
+      
+      const target = event.target as Element;
+      const isClickOnWindow = target.closest('[data-window]');
+      
+      if (!isClickOnWindow) {
+        setFocusedWindow("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -230,6 +253,9 @@ const About: React.FC = () => {
               width={window.width}
               x={(position.x / containerSize.width) * 100}
               y={(position.y / containerSize.height) * 100}
+              windowId={window.title}
+              onFocus={handleWindowFocus}
+              isFocused={focusedWindow === window.title}
             />
           );
         })}

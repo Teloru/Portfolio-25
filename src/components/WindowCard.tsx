@@ -11,6 +11,9 @@ interface WindowCardProps {
   width: number;
   x: number;
   y: number;
+  windowId?: string;
+  onFocus?: (windowId: string) => void;
+  isFocused?: boolean;
 }
 
 const WindowContainer = styled.li<{
@@ -25,12 +28,12 @@ const WindowContainer = styled.li<{
   background: rgba(20, 20, 25, 0.95);
   border: 2px solid
     ${(props) =>
-      props.$focused ? "rgba(96, 165, 250, 0.6)" : "rgba(255, 255, 255, 0.2)"};
+      props.$focused ? "var(--window-border-focus)" : "rgba(255, 255, 255, 0.2)"};
   border-radius: 8px;
   backdrop-filter: blur(10px);
   box-shadow: ${(props) =>
     props.$focused
-      ? "0 12px 40px rgba(96, 165, 250, 0.2), 0 4px 16px rgba(0, 0, 0, 0.4)"
+      ? "0 12px 40px rgba(250, 227, 241, 0.1), 0 4px 16px rgba(0, 0, 0, 0.4)"
       : "0 8px 32px rgba(0, 0, 0, 0.3)"};
   transform: translate3d(
     ${(props) => props.$x}vw,
@@ -42,8 +45,8 @@ const WindowContainer = styled.li<{
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: rgba(96, 165, 250, 0.4);
-    box-shadow: 0 12px 40px rgba(96, 165, 250, 0.1),
+    border-color: var(--window-border-focus);
+    box-shadow: 0 12px 40px rgba(250, 227, 241, 0.1),
       0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
@@ -109,12 +112,12 @@ const WindowBody = styled.div`
   letter-spacing: 0.025em;
 
   .highlight {
-    color: #60a5fa;
+    color: var(--highlight);
     font-weight: 600;
   }
 
   a {
-    color: #60a5fa;
+    color: var(--highlight);
     text-decoration: none;
 
     &:hover {
@@ -137,11 +140,11 @@ const WindowBody = styled.div`
 
     summary {
       cursor: pointer;
-      color: #60a5fa;
+      color: var(--highlight);
       font-weight: 500;
 
       &:hover {
-        color: #93c5fd;
+        color: var(--highlight-hover);
       }
     }
 
@@ -158,10 +161,12 @@ const WindowCard: React.FC<WindowCardProps> = ({
   width,
   x,
   y,
+  windowId = title,
+  onFocus,
+  isFocused: externalFocused = false,
 }) => {
   const windowRef = useRef<HTMLLIElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (!windowRef.current) return;
@@ -172,7 +177,7 @@ const WindowCard: React.FC<WindowCardProps> = ({
       bounds: windowRef.current.parentElement, // use parent instead of body
       inertia: true,
       onPress: () => {
-        setIsFocused(true);
+        onFocus?.(windowId);
       },
       onDrag: () => {
         // Optional: logic during drag
@@ -184,13 +189,7 @@ const WindowCard: React.FC<WindowCardProps> = ({
 
     // Click handler for focus
     const handleClick = () => {
-      setIsFocused(true);
-      // Remove focus from other windows
-      document.querySelectorAll("[data-window]").forEach((window) => {
-        if (window !== windowRef.current) {
-          (window as any).blur?.();
-        }
-      });
+      onFocus?.(windowId);
     };
 
     windowRef.current.addEventListener("mousedown", handleClick);
@@ -216,7 +215,7 @@ const WindowCard: React.FC<WindowCardProps> = ({
         windowRef.current.removeEventListener("mousedown", handleClick);
       }
     };
-  }, []);
+  }, [windowId, onFocus]);
 
   useEffect(() => {
     if (isVisible && windowRef.current) {
@@ -243,12 +242,12 @@ const WindowCard: React.FC<WindowCardProps> = ({
       $width={width}
       $x={x}
       $y={y}
-      $focused={isFocused}
+      $focused={externalFocused}
       data-window
     >
       <WindowHeader>
         <h3>{title}</h3>
-        <CloseButton onClick={() => setIsFocused(false)} />
+        <CloseButton onClick={() => onFocus?.("")} />
       </WindowHeader>
       <WindowBody dangerouslySetInnerHTML={{ __html: body }} />
     </WindowContainer>
