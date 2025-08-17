@@ -171,14 +171,19 @@ const WindowCard: React.FC<WindowCardProps> = ({
   useEffect(() => {
     if (!windowRef.current) return;
 
+    // Handle focus on mousedown (before dragging starts)
+    const handleMouseDown = () => {
+      // Focus the window immediately when mouse is pressed
+      onFocus?.(windowId);
+    };
+
+    windowRef.current.addEventListener("mousedown", handleMouseDown);
+
     // configure draggable
     Draggable.create(windowRef.current, {
       type: "x,y",
-      bounds: windowRef.current.parentElement, // use parent instead of body
+      bounds: windowRef.current.parentElement,
       inertia: true,
-      onPress: () => {
-        onFocus?.(windowId);
-      },
       onDrag: () => {
         // Optional: logic during drag
       },
@@ -186,13 +191,6 @@ const WindowCard: React.FC<WindowCardProps> = ({
         // Optional: logic after drag
       },
     });
-
-    // Click handler for focus
-    const handleClick = () => {
-      onFocus?.(windowId);
-    };
-
-    windowRef.current.addEventListener("mousedown", handleClick);
 
     // Intersection Observer for entry animation
     const observer = new IntersectionObserver(
@@ -212,7 +210,7 @@ const WindowCard: React.FC<WindowCardProps> = ({
     return () => {
       if (windowRef.current) {
         observer.unobserve(windowRef.current);
-        windowRef.current.removeEventListener("mousedown", handleClick);
+        windowRef.current.removeEventListener("mousedown", handleMouseDown);
       }
     };
   }, [windowId, onFocus]);
