@@ -6,19 +6,13 @@ function createDataTexture(width: number, height: number) {
   const size = width * height;
   const data = new Uint8Array(4 * size);
 
+  // Initialize with stable neutral value (0.5) to avoid flickering
   for (let i = 0; i < size; i++) {
     const stride = i * 4;
-    if (Math.random() < 0.5) {
-      data[stride] = 255;
-      data[stride + 1] = 255;
-      data[stride + 2] = 255;
-      data[stride + 3] = 255;
-    } else {
-      data[stride] = 255;
-      data[stride + 1] = 255;
-      data[stride + 2] = 255;
-      data[stride + 3] = 255;
-    }
+    data[stride] = 128;     // R: 0.5 in normalized range
+    data[stride + 1] = 128; // G: 0.5 in normalized range  
+    data[stride + 2] = 128; // B: 0.5 in normalized range
+    data[stride + 3] = 255; // A: 1.0
   }
 
   const texture = new THREE.DataTexture(data, width, height, THREE.RGBAFormat);
@@ -68,13 +62,13 @@ const bufferShader = `
    {
       // Mouse interaction
       float dist = length(iMouse.xy - coord);
-      d = smoothstep(13.0, 1.0, dist);
+      d = smoothstep(15.0, 2.0, dist) * 0.6;
    }
 
    // The actual propagation
-   d += -(p11-.5)*2. + (p10 + p01 + p21 + p12 - 2.);
-   d *= .98; // dampening
-   d *= min(1.,float(iFrame)); // clear the buffer at iFrame == 0
+   d += -(p11-.5)*2. + (p10 + p01 + p21 + p12 - 2.); // Back to normal propagation
+   d *= .992; // Light dampening - compromise between stability and duration
+   d *= smoothstep(0., 30., float(iFrame)); // smooth initialization instead of hard cutoff
    d = d*.5 + .5;
 
    gl_FragColor = vec4(d, 0, 0, 0);
@@ -153,14 +147,21 @@ const fragmentShader = `
     float ratio = u_resolution.x / u_resolution.y;
     float gridSize = 50.0;
 
-    vec2 squareUV = vec2(uv.x, uv.y / ratio);
-    float gridSizeInverse = 1. / gridSize;
+    // Create proper square grid cells by adjusting coordinates
+    vec2 squareUV;
+    if (ratio > 1.0) {
+      // Landscape: stretch X to maintain square cells
+      squareUV = vec2(uv.x * ratio, uv.y);
+    } else {
+      // Portrait: stretch Y to maintain square cells  
+      squareUV = vec2(uv.x, uv.y / ratio);
+    }
 
     vec2 squareUV1 = squareUV * gridSize;
     vec2 squareUV1_i = floor(squareUV1);
     vec2 squareUV1_f = fract(squareUV1);
 
-    // normalized UV to sample wave texture
+    // normalized UV to sample wave texture (keep original UV)
     vec2 normalGrid = uv * gridSize;
     vec2 normalGrid_i = floor(normalGrid);
     vec2 uv_img = normalGrid_i / gridSize;
@@ -217,6 +218,8 @@ class BufferManager {
       format: THREE.RGBAFormat,
       type: THREE.FloatType,
       stencilBuffer: false,
+      wrapS: THREE.ClampToEdgeWrapping,
+      wrapT: THREE.ClampToEdgeWrapping,
     });
 
     this.writeBuffer = this.readBuffer.clone();
@@ -264,11 +267,11 @@ const ThreeScene: React.FC = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: false });
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
     const mousePosition = new THREE.Vector4();
-    let counter = 0;
+    let frameCounter = 0;
+    const startTime = performance.now();
     let lastMouseX = 0;
     let lastMouseY = 0;
-    let mouseMoving = false;
-    let mouseStopTimeout: NodeJS.Timeout | null = null;
+    let mouseStopTimeout: number | null = null;
 
     renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
@@ -326,18 +329,15 @@ const ThreeScene: React.FC = () => {
 
       // check if mouse actually moved
       if (x !== lastMouseX || y !== lastMouseY) {
-        mouseMoving = true;
-
         // Reset stop timer
         if (mouseStopTimeout) {
           clearTimeout(mouseStopTimeout);
         }
 
-        // Stop effect after 100ms of no movement
+        // Stop effect after 80ms of no movement (compromise)
         mouseStopTimeout = setTimeout(() => {
-          mouseMoving = false;
           mousePosition.setZ(0); // Disable effect
-        }, 100) as any;
+        }, 80);
 
         // Update position
         mousePosition.setX(x);
@@ -352,17 +352,22 @@ const ThreeScene: React.FC = () => {
     // Just track mouse movement
     window.addEventListener("mousemove", handleMouseMove);
 
+    // Initialize buffers with neutral state to prevent flickering
+    targetA.render(bufferA.scene, camera);
+    targetB.render(bufferB.scene, camera);
+    
     // Animation loop
-    const animate = () => {
-      counter += 0.1;
+    const animate = (currentTime: number) => {
+      const elapsedTime = (currentTime - startTime) * 0.001; // Convert to seconds
+      frameCounter++;
 
-      // Update buffer shaders
-      bufferA.uniforms["iFrame"].value = counter;
-      bufferB.uniforms["iFrame"].value = counter;
-      bufferA.uniforms["iTime"].value = counter;
-      bufferB.uniforms["iTime"].value = counter;
+      // Update buffer shaders with time-based values
+      bufferA.uniforms["iFrame"].value = frameCounter;
+      bufferB.uniforms["iFrame"].value = frameCounter;
+      bufferA.uniforms["iTime"].value = elapsedTime;
+      bufferB.uniforms["iTime"].value = elapsedTime;
 
-      // Ping-pong rendering
+      // Ping-pong rendering with proper buffer management
       bufferA.uniforms["iChannel0"].value = targetA.readBuffer.texture;
       bufferA.uniforms["iChannel1"].value = targetB.readBuffer.texture;
       targetA.render(bufferA.scene, camera);
@@ -373,7 +378,7 @@ const ThreeScene: React.FC = () => {
 
       // Update main shader with wave texture
       uniforms.u_waveTexture.value = targetA.readBuffer.texture;
-      uniforms.u_time.value = counter * 0.001;
+      uniforms.u_time.value = elapsedTime;
 
       // Render final scene
       renderer.render(scene, camera);
