@@ -322,7 +322,44 @@ const ThreeScene: React.FC = () => {
     // Update resolution
     uniforms.u_resolution.value.set(width, height);
 
-    // Mouse events - seulement pendant le mouvement
+    // Handle window resize
+    const handleResize = () => {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      
+      // Update renderer size
+      renderer.setSize(newWidth, newHeight);
+      
+      // Update shader resolution uniform
+      uniforms.u_resolution.value.set(newWidth, newHeight);
+      
+      // Update buffer resolution (recreate them with new size)
+      targetA.readBuffer.setSize(newWidth, newHeight);
+      targetA.writeBuffer.setSize(newWidth, newHeight);
+      targetB.readBuffer.setSize(newWidth, newHeight);
+      targetB.writeBuffer.setSize(newWidth, newHeight);
+      
+      // Update buffer shader resolutions
+      bufferA.uniforms["iResolution"].value.set(newWidth, newHeight, window.devicePixelRatio);
+      bufferB.uniforms["iResolution"].value.set(newWidth, newHeight, window.devicePixelRatio);
+      
+      // Reinitialize buffers with neutral texture to prevent flickering
+      const newInitialTexture = createDataTexture(newWidth, newHeight);
+      bufferA.uniforms["iChannel0"].value = newInitialTexture;
+      bufferA.uniforms["iChannel1"].value = newInitialTexture;
+      bufferB.uniforms["iChannel0"].value = newInitialTexture;
+      bufferB.uniforms["iChannel1"].value = newInitialTexture;
+      
+      // Render a few neutral frames to stabilize
+      targetA.render(bufferA.scene, camera);
+      targetB.render(bufferB.scene, camera);
+      targetA.render(bufferA.scene, camera);
+      targetB.render(bufferB.scene, camera);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Mouse events
     const handleMouseMove = (event: MouseEvent) => {
       const x = event.clientX;
       const y = event.clientY;
@@ -401,6 +438,7 @@ const ThreeScene: React.FC = () => {
 
       // Remove event listeners
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", handleResize);
 
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
