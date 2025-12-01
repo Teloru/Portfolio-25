@@ -15,25 +15,36 @@ export const DEV_PROJECTS: Project[] = [
     id: 'p1',
     title: 'Void Engine',
     tags: ['C++', 'OpenGL', 'No Engine'],
-    description: 'A custom ECS-based game engine written from scratch in modern C++. Handles physics, rendering, and audio subsystems.',
-    year: '2023',
+    description: 'dream project, todo <3',
+    year: '???',
     image: 'https://picsum.photos/600/400?random=1'
   },
   {
     id: 'p2',
-    title: 'Neon Racer',
+    title: '2D Puzzle',
     tags: ['Raylib', 'C++'],
-    description: 'High-speed arcade racer inspired by F-Zero. Built using Raylib for raw performance and immediate mode GUI.',
-    year: '2024',
-    image: 'https://picsum.photos/600/400?random=2'
+    description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
+    year: '2023',
+    image: 'https://picsum.photos/600/400?random=2',
+    link: 'https://gitlab.com/Astrid-Beyer/videogame-cpp'
   },
   {
     id: 'p3',
-    title: 'Shadow Protocol',
+    title: 'Develop at Ubisoft',
     tags: ['SFML', 'C++'],
-    description: '2D stealth platformer with dynamic lighting and shadow casting algorithms implemented manually.',
-    year: '2022',
-    image: 'https://picsum.photos/600/400?random=3'
+    description: 'Tower Defense game developed in C++ using SFML. The player must complete rhythm sequences to build towers and defend against waves of bunnies. Play it on itch.io!',
+    year: '2024 - 2025',
+    image: 'https://picsum.photos/600/400?random=3',
+    link: 'https://gitlab.com/Astrid-Beyer/develop-at-ubisoft'
+  },
+  {
+    id: 'p4',
+    title: 'Teloboup',
+    tags: ['Discord.js', 'Node'],
+    description: 'A Discord bot designed to enhance my community server with fun commands and moderation tools.',
+    year: '2023 - today',
+    image: 'https://picsum.photos/600/400?random=4',
+    link: 'https://gitlab.com/Astrid-Beyer/teloboup-discord-bot'
   }
 ];
 

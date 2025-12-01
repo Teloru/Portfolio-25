@@ -137,23 +137,25 @@ const DevSection = () => (
     <div className="space-y-16">
       {DEV_PROJECTS.map((project, i) => (
         <div key={project.id} className="group cursor-pointer">
-          <div className="relative mb-6 overflow-hidden">
-             <div className="absolute inset-0 bg-white/5 z-10 group-hover:bg-transparent transition-colors duration-500" />
-             <img src={project.image} alt={project.title} className="w-full aspect-[16/9] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" />
-          </div>
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-             <div>
-                <h3 className="font-display font-bold text-2xl mb-2 group-hover:text-white/80">{project.title}</h3>
-                <p className="font-mono text-xs text-gray-500 max-w-sm mb-4">{project.description}</p>
-             </div>
-             <div className="flex flex-wrap gap-2 justify-end">
-                {project.tags.map(tag => (
-                   <span key={tag} className="font-mono text-[10px] border border-white/10 px-2 py-1 text-gray-400 uppercase">
-                     {tag}
-                   </span>
-                ))}
-             </div>
-          </div>
+          <a href={project.link} target="_blank">
+            <div className="relative mb-6 overflow-hidden">
+              <div className="absolute inset-0 bg-white/5 z-10 group-hover:bg-transparent transition-colors duration-500" />
+              <img src={project.image} alt={project.title} className="w-full aspect-[16/9] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" />
+            </div>
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div>
+                  <h3 className="font-display font-bold text-2xl mb-2 group-hover:text-white/80">{project.title}</h3>
+                  <p className="font-mono text-xs text-gray-500 max-w-sm mb-4">{project.description}</p>
+              </div>
+              <div className="flex flex-wrap gap-2 justify-end">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="font-mono text-[10px] border border-white/10 px-2 py-1 text-gray-400 uppercase">
+                      {tag}
+                    </span>
+                  ))}
+              </div>
+            </div>
+          </a>
         </div>
       ))}
     </div>
