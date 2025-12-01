@@ -103,11 +103,11 @@ const HomeSection = ({ setCurrentSection }: { setCurrentSection: (s: SectionType
       <div className="space-y-4 max-w-md">
         <p className="font-mono text-sm text-white leading-relaxed">
           <span className="text-gray-400">Welcome! I'm Astrid.</span><br/>
-          Currently working as a 3D software engineer <span className="text-white border-b border-white/30">@h3d</span>.
+          Currently working as a 3D software engineer <span className="text-white border-b border-white/30"><a href="https://h3d.ai/" target="_blank">@h3d</a></span>.
         </p>
         
         <div className="flex items-center gap-2 text-xs font-mono text-gray-500">
-          <MapPin size={12} /> Based in Marseille, France.
+          <MapPin size={12} /> Based in La Ciotat, France.
         </div>
 
         <p className="font-mono text-xs text-gray-400 pt-4 leading-relaxed border-l-2 border-white/10 pl-4">
