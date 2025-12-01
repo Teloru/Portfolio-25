@@ -328,7 +328,7 @@ const ContactSection = () => (
 
       {/* Links Grid */}
       <div className="grid grid-cols-1 gap-6">
-        <a href="mailto:hello@astrid.dev" className="group flex items-center justify-between border-b border-white/20 pb-4 hover:border-white transition-colors">
+        <a href="mailto:astrid.beyer@orange.fr" className="group flex items-center justify-between border-b border-white/20 pb-4 hover:border-white transition-colors">
           <div className="flex items-center gap-4">
             <Mail size={18} />
             <span className="font-display text-xl">Email</span>
@@ -336,7 +336,7 @@ const ContactSection = () => (
           <ArrowRight className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
         </a>
 
-        <a href="#" className="group flex items-center justify-between border-b border-white/20 pb-4 hover:border-white transition-colors">
+        <a href="https://ko-fi.com/teloru" target="_blank" className="group flex items-center justify-between border-b border-white/20 pb-4 hover:border-white transition-colors">
           <div className="flex items-center gap-4">
             <Coffee size={18} className="text-pink-300" />
             <div className="flex flex-col">
@@ -347,7 +347,7 @@ const ContactSection = () => (
           <ArrowRight className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
         </a>
 
-        <a href="#" className="group flex items-center justify-between border-b border-white/20 pb-4 hover:border-white transition-colors">
+        <a href="https://www.linkedin.com/in/astrid-be/" target="_blank" className="group flex items-center justify-between border-b border-white/20 pb-4 hover:border-white transition-colors">
           <div className="flex items-center gap-4">
             <Linkedin size={18} />
             <span className="font-display text-xl">LinkedIn</span>
