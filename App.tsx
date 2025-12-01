@@ -167,7 +167,7 @@ const ArtSection = () => (
      <div className="mb-12">
        <span className="font-mono text-xs text-white/40 mb-2 block">03_CREATIVE</span>
        <h2 className="font-display font-bold text-4xl md:text-5xl">Digital Atelier</h2>
-       <p className="font-mono text-xs text-gray-500 mt-4">@teloru • Blender • 3D • 2D</p>
+       <p className="font-mono text-xs text-gray-500 mt-4"><a className='border-b border-white/30' href="https://www.instagram.com/teloru_/">@teloru</a> • Blender • Clip Studio Paint • 3D • 2D</p>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {ART_PROJECTS.map((project) => (
@@ -196,10 +196,26 @@ const ExperienceSection = () => (
           <h3 className="font-mono text-xs uppercase tracking-widest text-white/40 mb-8 border-b border-white/10 pb-2">Professional</h3>
           
           <div className="relative border-l border-white/10 ml-1 space-y-12">
+
+            <div className="relative pl-8 group">
+              <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
+              <span className="font-mono text-[10px] text-white/50 mb-1 block">Dec 2024 - today • Copenhagen, Denmark</span>
+              <h3 className="font-display font-bold text-xl mb-1 text-white">H3D</h3>
+              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D SE • Dental R&D Team</p>
+              <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
+              Development of advanced 3D dental scanning solutions with a focus on geometric processing and mesh optimization applied to patient scans.
+              <br/>
+                <li>Lead developer for Models in the dental portfolio, handling end-to-end algorithmic and production tasks.</li>
+                <li>Led the Hugin project, reducing ML pipeline runtime by 5-10% by dynamically downloading model weights at runtime instead of embedding them in Docker images. This optimization accelerated CI/CD builds and cut execution time of large test sets by over an hour.</li>
+                <li>Coordinating Dental team releases and managed client account provisioning, ensuring smooth integration into production workflows.</li>
+                <li>Partnered closely with fullstack, AI, and product teams to align technical solutions with business objectives. </li>
+                <li>Contributed to cybersecurity initiatives, enhancing pipeline and infrastructure security.</li>
+              </ul>
+            </div>
             
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
-              <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2024 - Sep 2024 • Aix-en-Provence</span>
+              <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2024 - Sep 2024 • Aix-en-Provence, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-white">Dassault Systèmes</h3>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">SE Intern • Additive Manufacturing</p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
@@ -211,7 +227,7 @@ const ExperienceSection = () => (
 
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
-              <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2023 - Jun 2023 • Marseille</span>
+              <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2023 - Jun 2023 • Marseille, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-gray-200">LIS Lab</h3>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CG Researcher Intern • G-Mod Team</p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
@@ -223,9 +239,9 @@ const ExperienceSection = () => (
 
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
-              <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2022 - Aug 2022 • La Ciotat</span>
+              <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2022 - Aug 2022 • La Ciotat, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-gray-200">Iconik</h3>
-              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CMS Developer Intern</p>
+              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CMS Developer Intern • Communication team</p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
                 <li>Led development of Iconik's website for VR video game services.</li>
                 <li>Reduced page load time by 25% through optimization.</li>
