@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionType } from './types';
 import Scene3D from './components/Cube3D';
 import GachaSystem from './components/GachaSystem';
@@ -320,19 +320,46 @@ const StreamSection = () => (
   </div>
 );
 
-const ContactSection = () => (
-  <div className="flex flex-col justify-center min-h-[50vh] pb-12 pt-10 md:pt-0">
-    <h2 className="font-display font-extrabold text-5xl md:text-7xl mb-12 tracking-tighter leading-[0.9]">
-      LET'S<br/>CREATE.
-    </h2>
-    
-    <div className="flex flex-col gap-12 max-w-xl">
+const ContactSection = () => {
+  const [parisTime, setParisTime] = useState<string>('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const parisTimeString = now.toLocaleString('fr-FR', {
+        timeZone: 'Europe/Paris',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      setParisTime(parisTimeString);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex flex-col justify-center min-h-[50vh] pb-12 pt-10 md:pt-0">
+      <h2 className="font-display font-extrabold text-5xl md:text-7xl mb-12 tracking-tighter leading-[0.9]">
+        LET'S<br/>CREATE.
+      </h2>
+      
+      <div className="flex flex-col gap-12 max-w-xl">
       
       {/* Status Block */}
       <div className="bg-white/5 p-6 rounded-lg border border-white/10">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
           <span className="font-mono text-xs uppercase text-green-400">Status: Open for opportunities</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs text-white font-semibold tabular-nums">
+            {parisTime}
+          </span>
+          <span className="font-mono text-[10px] text-gray-400 uppercase">Paris (CET/CEST)</span>
         </div>
         <p className="text-sm text-gray-300 leading-relaxed font-light mb-4">
           Open to remote work. Eager to contribute to research projects in real time rendering.
@@ -375,6 +402,7 @@ const ContactSection = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export default App;
