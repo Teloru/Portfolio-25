@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<SectionType>(SectionType.HOME);
 
   return (
-    <div className="relative w-full h-screen bg-[#050505] text-white overflow-hidden flex font-sans selection:bg-white selection:text-black">
+    <div className="relative w-full min-h-screen bg-[#050505] text-white overflow-x-hidden flex font-sans selection:bg-white selection:text-black">
       
       {/* 3D Scene Layer */}
       <Scene3D currentSection={currentSection} />
@@ -62,7 +62,7 @@ const App: React.FC = () => {
 
       {/* Main Content Area - Slide in from Right/Bottom */}
       <main className="absolute inset-0 z-10 flex flex-col items-end justify-center pointer-events-none">
-        <div className="w-full md:w-[60%] lg:w-[50%] h-full md:h-[90vh] md:mr-12 lg:mr-24 pointer-events-auto overflow-hidden">
+        <div className="w-full md:w-[60%] lg:w-[50%] h-full md:h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto overflow-hidden max-w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSection}
@@ -72,7 +72,7 @@ const App: React.FC = () => {
               transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
               className="h-full w-full overflow-y-auto no-scrollbar"
             >
-              <div className="min-h-full w-full p-6 md:p-12 pt-28 md:pt-12 flex flex-col justify-center">
+              <div className="min-h-full w-full p-4 sm:p-6 md:p-8 lg:p-12 pt-28 md:pt-12 flex flex-col justify-center overflow-x-hidden">
                 {currentSection === SectionType.HOME && <HomeSection setCurrentSection={setCurrentSection} />}
                 {currentSection === SectionType.DEV && <DevSection />}
                 {currentSection === SectionType.ART && <ArtSection />}
@@ -93,9 +93,9 @@ const App: React.FC = () => {
 // --- Sections ---
 
 const HomeSection = ({ setCurrentSection }: { setCurrentSection: (s: SectionType) => void }) => (
-  <div className="flex flex-col gap-8">
+  <div className="flex flex-col gap-8 max-w-full overflow-hidden">
     <div>
-      <h2 className="font-display font-extrabold text-6xl md:text-8xl tracking-tight leading-[0.85] mb-6">
+      <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight leading-[0.85] mb-6 max-w-full overflow-hidden">
         GRAPHICS<br/>ENGINEER
       </h2>
       <div className="h-[1px] w-24 bg-white/20 mb-6" />
@@ -117,11 +117,11 @@ const HomeSection = ({ setCurrentSection }: { setCurrentSection: (s: SectionType
       </div>
     </div>
     
-    <div className="flex gap-4 pt-4">
-       <button onClick={() => setCurrentSection(SectionType.DEV)} className="group flex items-center gap-2 font-mono text-xs border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition-all">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
+       <button onClick={() => setCurrentSection(SectionType.DEV)} className="group flex items-center justify-center gap-2 font-mono text-xs border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition-all whitespace-nowrap">
          VIEW WORK <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform"/>
        </button>
-       <button onClick={() => setCurrentSection(SectionType.CONTACT)} className="group flex items-center gap-2 font-mono text-xs px-6 py-3 rounded-full hover:bg-white/5 transition-all text-gray-400 hover:text-white">
+       <button onClick={() => setCurrentSection(SectionType.CONTACT)} className="group flex items-center justify-center gap-2 font-mono text-xs px-6 py-3 rounded-full hover:bg-white/5 transition-all text-gray-400 hover:text-white whitespace-nowrap">
          CONTACT
        </button>
     </div>
@@ -169,9 +169,9 @@ const ArtSection = () => (
        <h2 className="font-display font-bold text-4xl md:text-5xl">Digital Atelier</h2>
        <p className="font-mono text-xs text-gray-500 mt-4"><a className='border-b border-white/30' href="https://www.instagram.com/teloru_/" target="_blank">@teloru</a> • Blender • Clip Studio Paint • Photoshop • Davinci Resolve</p>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
       {ART_PROJECTS.map((project) => (
-        <div key={project.id} className="relative group cursor-pointer aspect-square bg-white/5 overflow-hidden">
+        <div key={project.id} className="relative group cursor-pointer aspect-square bg-white/5 overflow-hidden w-full max-w-full">
            <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
            <div className="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <h3 className="font-display font-bold text-xl">{project.title}</h3>
@@ -184,7 +184,7 @@ const ArtSection = () => (
 );
 
 const ExperienceSection = () => (
-   <div className="max-w-3xl w-full pb-24 pt-10 md:pt-0">
+   <div className="max-w-full lg:max-w-3xl w-full pb-24 pt-10 md:pt-0">
       <div className="mb-16">
          <span className="font-mono text-xs text-white/40 mb-2 block">05_LOGS</span>
          <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">Experience & Education</h2>
@@ -197,7 +197,7 @@ const ExperienceSection = () => (
           
           <div className="relative border-l border-white/10 ml-1 space-y-12">
 
-            <div className="relative pl-8 group">
+            <div className="relative pl-6 sm:pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Dec 2024 - today • Copenhagen, Denmark</span>
               <h3 className="font-display font-bold text-xl mb-1 text-white">H3D</h3>
@@ -343,11 +343,9 @@ const ContactSection = () => {
 
   return (
     <div className="flex flex-col justify-center min-h-[50vh] pb-12 pt-10 md:pt-0">
-      <h2 className="font-display font-extrabold text-5xl md:text-7xl mb-12 tracking-tighter leading-[0.9]">
-        LET'S<br/>CREATE.
-      </h2>
-      
-      <div className="flex flex-col gap-12 max-w-xl">
+    <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-12 tracking-tighter leading-[0.9]">
+      LET'S<br/>CREATE.
+    </h2>      <div className="flex flex-col gap-12 max-w-xl">
       
       {/* Status Block */}
       <div className="bg-white/5 p-6 rounded-lg border border-white/10">
