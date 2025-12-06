@@ -41,7 +41,7 @@ export const DEV_PROJECTS: Project[] = [
     id: 'p4',
     title: 'Teloboup',
     tags: ['Discord.js', 'Node'],
-    description: 'A Discord bot designed to enhance my community server with fun commands and moderation tools.',
+    description: 'A Discord bot designed to enhance my community server with fun commands and moderation tools. Open to contributions!',
     year: '2023 - today',
     image: 'https://picsum.photos/600/400?random=4',
     link: 'https://gitlab.com/Astrid-Beyer/teloboup-discord-bot'
