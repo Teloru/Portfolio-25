@@ -167,7 +167,7 @@ const ArtSection = () => (
      <div className="mb-12">
        <span className="font-mono text-xs text-white/40 mb-2 block">03_CREATIVE</span>
        <h2 className="font-display font-bold text-4xl md:text-5xl">Digital Atelier</h2>
-       <p className="font-mono text-xs text-gray-500 mt-4"><a className='border-b border-white/30' href="https://www.instagram.com/teloru_/">@teloru</a> • Blender • Clip Studio Paint • 3D • 2D</p>
+       <p className="font-mono text-xs text-gray-500 mt-4"><a className='border-b border-white/30' href="https://www.instagram.com/teloru_/" target="_blank">@teloru</a> • Blender • Clip Studio Paint • Photoshop • Davinci Resolve</p>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {ART_PROJECTS.map((project) => (
