@@ -62,7 +62,7 @@ const App: React.FC = () => {
 
       {/* Main Content Area - Slide in from Right/Bottom */}
       <main className="absolute inset-0 z-10 flex flex-col items-end justify-center pointer-events-none">
-        <div className="w-full md:w-[62%] lg:w-[52%] xl:w-[54%] h-full md:h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto overflow-hidden max-w-full">
+        <div className="w-full md:w-[60%] lg:w-[50%] h-full md:h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto overflow-hidden max-w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSection}
