@@ -62,7 +62,7 @@ const App: React.FC = () => {
 
       {/* Main Content Area - Slide in from Right/Bottom */}
       <main className="absolute inset-0 z-10 flex flex-col items-end justify-center pointer-events-none">
-        <div className="w-full md:w-[60%] lg:w-[50%] h-full md:h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto overflow-hidden max-w-full">
+        <div className="w-full md:w-[62%] lg:w-[52%] xl:w-[54%] h-full md:h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto overflow-hidden max-w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSection}
@@ -72,7 +72,7 @@ const App: React.FC = () => {
               transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
               className="h-full w-full overflow-y-auto no-scrollbar"
             >
-              <div className="min-h-full w-full p-4 sm:p-6 md:p-8 lg:p-12 pt-28 md:pt-12 flex flex-col justify-center overflow-x-hidden">
+              <div className="min-h-full w-full p-4 sm:p-6 md:p-8 lg:p-6 xl:p-4 pt-28 md:pt-12 flex flex-col justify-center overflow-x-hidden">
                 {currentSection === SectionType.HOME && <HomeSection setCurrentSection={setCurrentSection} />}
                 {currentSection === SectionType.DEV && <DevSection />}
                 {currentSection === SectionType.ART && <ArtSection />}
@@ -93,9 +93,9 @@ const App: React.FC = () => {
 // --- Sections ---
 
 const HomeSection = ({ setCurrentSection }: { setCurrentSection: (s: SectionType) => void }) => (
-  <div className="flex flex-col gap-8 max-w-full overflow-hidden">
+  <div className="flex flex-col gap-8 max-w-full">
     <div>
-      <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight leading-[0.85] mb-6 max-w-full overflow-hidden">
+      <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight leading-[0.85] mb-6 max-w-full">
         GRAPHICS<br/>ENGINEER
       </h2>
       <div className="h-[1px] w-24 bg-white/20 mb-6" />
