@@ -1,29 +1,58 @@
 import React, { useState } from 'react';
-import { GACHA_ITEMS } from '../constants';
-import { GachaItem } from '../types';
+import { Personality, PersonalityType } from '../types';
 import { Box, X, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import GachaBox from './GachaBox';
+import Model3D from './Model3D';
+
+const PERSONALITIES: Personality[] = [
+  {
+    id: 'STREAMER',
+    name: 'Content creator & gamer',
+    description: 'todo',
+    modelPath: '/objects/astrid_stream.glb',
+    color: '#FF7EDB',
+    tags: ['Twitch', 'YouTube', 'Community']
+  },
+  {
+    id: 'DEVELOPER',
+    name: '3D R&D Developer',
+    description: 'Graphics engineer xxx',
+    modelPath: '/objects/astrid_research.glb',
+    color: '#B4FEE7',
+    tags: ['C++', 'OpenGL', 'Research']
+  },
+  {
+    id: 'ARTIST',
+    name: '2D/3D Artist',
+    description: 'todo',
+    modelPath: '/objects/astrid_art.glb',
+    color: '#D6BBFB',
+    tags: ['Blender', '2D Art', 'Design']
+  }
+];
 
 const GachaSystem: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [reward, setReward] = useState<GachaItem | null>(null);
+  const [personality, setPersonality] = useState<Personality | null>(null);
   const [isOpening, setIsOpening] = useState(false);
 
   const pullGacha = () => {
     setIsOpening(true);
-    setReward(null);
+    setPersonality(null);
     setIsOpen(true);
+  };
 
-    setTimeout(() => {
-      const randomItem = GACHA_ITEMS[Math.floor(Math.random() * GACHA_ITEMS.length)];
-      setReward(randomItem);
-      setIsOpening(false);
-    }, 1200);
+  const handleBoxComplete = () => {
+    const randomPersonality = PERSONALITIES[Math.floor(Math.random() * PERSONALITIES.length)];
+    setPersonality(randomPersonality);
+    setIsOpening(false);
   };
 
   const closeGacha = () => {
     setIsOpen(false);
-    setReward(null);
+    setPersonality(null);
+    setIsOpening(false);
   };
 
   return (
@@ -45,52 +74,75 @@ const GachaSystem: React.FC = () => {
                animate={{ opacity: 1, scale: 1, y: 0 }}
                exit={{ opacity: 0, scale: 0.95, y: 20 }}
                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-               className="bg-[#0a0a0a] border border-white/10 w-96 rounded-2xl overflow-hidden shadow-2xl relative"
+               className="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl relative mx-4"
              >
                 <button 
                   onClick={closeGacha}
-                  className="absolute top-4 right-4 text-white/30 hover:text-white transition-colors"
+                  className="absolute top-4 right-4 text-white/30 hover:text-white transition-colors z-10"
                 >
                   <X size={18} />
                 </button>
                 
                 <div className="p-10 flex flex-col items-center text-center">
-                   <h3 className="font-mono text-xs tracking-widest text-gray-500 mb-8 uppercase">Micro-Rewards</h3>
+                   <h3 className="font-mono text-xs tracking-widest text-gray-500 mb-8 uppercase">
+                     Collect my personas
+                   </h3>
                    
                    {isOpening ? (
-                     <motion.div 
-                       animate={{ rotate: 360 }}
-                       transition={{ duration: 2, ease: "linear", repeat: Infinity }}
-                       className="text-white/20 mb-6"
-                     >
-                       <Box size={48} strokeWidth={1} />
-                     </motion.div>
-                   ) : (
+                     <GachaBox onComplete={handleBoxComplete} />
+                   ) : personality ? (
                      <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col items-center gap-6"
+                        className="flex flex-col items-center gap-6 w-full"
                      >
-                       <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
-                         <div className="text-white">
-                            {reward?.icon}
-                         </div>
-                       </div>
+                       {/* 3D rotating model */}
+                       <Model3D modelPath={personality.modelPath} />
                        
-                       <div>
-                         <div className="font-mono text-[10px] text-white/40 mb-2 border border-white/10 inline-block px-2 py-1 rounded">
-                           {reward?.rarity}
+                       <div className="space-y-4">
+                         {/* Tags */}
+                         <div className="flex gap-2 justify-center flex-wrap">
+                           {personality.tags.map((tag, i) => (
+                             <span 
+                               key={i}
+                               className="font-mono text-[10px] text-white/40 border border-white/10 px-2 py-1 rounded"
+                             >
+                               {tag}
+                             </span>
+                           ))}
                          </div>
-                         <p className="font-display font-medium text-xl text-white leading-tight">
-                           {reward?.text}
+                         
+                         {/* name */}
+                         <h4 
+                           className="font-display font-bold text-2xl leading-tight"
+                           style={{ color: personality.color }}
+                         >
+                           {personality.name}
+                         </h4>
+                         
+                         {/* desc */}
+                         <p className="text-white/60 text-sm max-w-md leading-relaxed">
+                           {personality.description}
                          </p>
                        </div>
                      </motion.div>
+                   ) : (
+                     <div className="h-64 flex items-center justify-center">
+                       <motion.div 
+                         animate={{ rotate: 360 }}
+                         transition={{ duration: 2, ease: "linear", repeat: Infinity }}
+                         className="text-white/20"
+                       >
+                         <Sparkles size={48} strokeWidth={1} />
+                       </motion.div>
+                     </div>
                    )}
                 </div>
                 
                 <div className="bg-white/5 p-3 text-center">
-                  <span className="text-[10px] font-mono text-white/20">ASTRID_BEYER_COLLECTIBLES_v1.0</span>
+                  <span className="text-[10px] font-mono text-white/20">
+                    CATCH THEM ALL!
+                  </span>
                 </div>
              </motion.div>
           </div>
