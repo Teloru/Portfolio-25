@@ -124,6 +124,17 @@ const GachaSystem: React.FC = () => {
                          <p className="text-white/60 text-sm max-w-md leading-relaxed">
                            {personality.description}
                          </p>
+                         
+                         {/* pull another button */}
+                         <motion.button
+                           whileHover={{ scale: 1.03 }}
+                           whileTap={{ scale: 0.98 }}
+                           onClick={pullGacha}
+                           className="mt-4 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-mono text-xs uppercase tracking-wider transition-colors border border-white/10 flex items-center gap-2 mx-auto"
+                         >
+                           <Box size={14} />
+                           Open another one!
+                         </motion.button>
                        </div>
                      </motion.div>
                    ) : (
