@@ -33,9 +33,14 @@ const GachaBox: React.FC<GachaBoxProps> = ({ onComplete }) => {
         {step !== 'revealed' ? (
           <motion.div
             key="box-container"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            initial={{ scale: 0.8, opacity: 0, y: 0 }}
+            animate={{ 
+              scale: 1, 
+              opacity: 1,
+              y: step === 'pulling' ? 40 : 0
+            }}
             exit={{ scale: 1.2, opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="relative cursor-pointer"
             onClick={handleStart}
           >
