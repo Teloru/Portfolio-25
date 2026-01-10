@@ -30,11 +30,16 @@ const Model3D: React.FC<Model3DProps> = ({ modelPath }) => {
     <div className="w-full h-64 rounded-lg overflow-hidden bg-gradient-to-br from-black/40 to-black/20">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ 
+          antialias: true, 
+          alpha: true,
+          powerPreference: 'high-performance'
+        }}
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <spotLight position={[-10, -10, -5]} angle={0.3} intensity={0.5} />
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[5, 5, 5]} intensity={1.5} />
+        <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+        <pointLight position={[0, 10, 0]} intensity={1} />
         <Model modelPath={modelPath} />
         <OrbitControls 
           enableZoom={false} 
