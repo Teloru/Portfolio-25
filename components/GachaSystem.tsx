@@ -96,22 +96,22 @@ const GachaSystem: React.FC = () => {
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-md">
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-md p-4">
              <motion.div 
                initial={{ opacity: 0, scale: 0.95, y: 20 }}
                animate={{ opacity: 1, scale: 1, y: 0 }}
                exit={{ opacity: 0, scale: 0.95, y: 20 }}
                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-               className="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl relative mx-4"
+               className="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-2xl overflow-y-auto shadow-2xl relative max-h-[90vh]"
              >
                 <button 
                   onClick={closeGacha}
-                  className="absolute top-4 right-4 text-white/30 hover:text-white transition-colors z-10"
+                  className="sticky top-4 right-4 ml-auto mr-4 mt-4 text-white/30 hover:text-white transition-colors z-50 bg-black/80 p-2 rounded-full backdrop-blur-sm flex items-center justify-center"
                 >
                   <X size={18} />
                 </button>
                 
-                <div className="p-10 flex flex-col items-center text-center">
+                <div className="px-6 pb-10 pt-2 flex flex-col items-center text-center">
                    {/* collection progress header */}
                    <div className="mb-6 flex flex-col items-center gap-3">
                      <h3 className="font-mono text-xs tracking-widest text-gray-500 uppercase">
