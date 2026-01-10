@@ -123,11 +123,19 @@ const GachaSystem: React.FC = () => {
                        {PERSONALITIES.map((p) => {
                          const isCollected = collected.has(p.id);
                          return (
-                           <div
+                           <button
                              key={p.id}
+                             onClick={() => {
+                               if (isCollected) {
+                                 setPersonality(p);
+                                 setIsOpening(false);
+                                 setIsNewUnlock(false);
+                               }
+                             }}
+                             disabled={!isCollected}
                              className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
                                isCollected 
-                                 ? 'border-white/40 opacity-100' 
+                                 ? 'border-white/40 opacity-100 cursor-pointer hover:scale-110 hover:brightness-125' 
                                  : 'border-white/10 opacity-30'
                              }`}
                              style={{ 
@@ -139,7 +147,7 @@ const GachaSystem: React.FC = () => {
                              ) : (
                                <div className="text-xs text-white/20">?</div>
                              )}
-                           </div>
+                           </button>
                          );
                        })}
                      </div>
