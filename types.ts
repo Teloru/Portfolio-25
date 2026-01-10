@@ -25,3 +25,14 @@ export interface GachaItem {
   rarity: 'COMMON' | 'RARE' | 'LEGENDARY';
   icon: ReactNode;
 }
+
+export type PersonalityType = 'STREAMER' | 'DEVELOPER' | 'ARTIST';
+
+export interface Personality {
+  id: PersonalityType;
+  name: string;
+  description: string;
+  modelPath: string;
+  color: string;
+  tags: string[];
+}
