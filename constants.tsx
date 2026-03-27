@@ -76,28 +76,36 @@ export const DEV_PROJECTS: Project[] = [
 
 export const ART_PROJECTS: Project[] = [
   {
-    id: 'cyber-angel',
-    title: 'Cyber Angel',
-    tags: ['Blender', '3D', 'Eevee'],
-    description: 'Character model for a V-Tuber concept. Modeled, rigged, and textured in Blender.',
+    id: 'selfie-3d-me',
+    title: 'Selfie with my lowpoly self',
+    tags: ['Blender', '3D', 'Character'],
+    description: 'Photo and 3D character crossover experiment.',
     year: '2024',
-    image: 'https://picsum.photos/600/400?random=4'
+    image: '/img/art-lab/selfie_with_3d_me.jpg'
   },
   {
-    id: 'neo-tokyo-alley',
-    title: 'Neo-Tokyo Alley',
-    tags: ['Blender', 'Cycles'],
-    description: 'Atmospheric environment study focusing on volumetric lighting and cyberpunk aesthetics.',
-    year: '2023',
-    image: 'https://picsum.photos/600/400?random=5'
+    id: 'nds-clip',
+    title: 'NDS Clip',
+    tags: ['3D', 'Animation', 'Video'],
+    description: 'Experimental short clip from my art lab folder.',
+    year: '2024',
+    image: '/img/art-lab/nds.mp4'
   },
   {
-    id: 'y2k-icons',
-    title: 'Y2K Icons',
+    id: 'lowpoly-me',
+    title: 'Lowpoly Me',
+    tags: ['Blender', 'Low Poly', 'Turntable'],
+    description: 'Short turntable capture of a lowpoly self-character.',
+    year: '2024',
+    image: '/img/art-lab/lowpoly_me.mp4'
+  },
+  {
+    id: 'drawing-01',
+    title: 'Drawing 01',
     tags: ['2D', 'Digital Art'],
-    description: 'Vector asset pack designed for stream overlays and web interfaces.',
+    description: 'Personal digital illustration study.',
     year: '2023',
-    image: 'https://picsum.photos/600/400?random=6'
+    image: '/img/art-lab/drawing_01.jpeg'
   }
 ];
 

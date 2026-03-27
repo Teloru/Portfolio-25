@@ -191,7 +191,19 @@ const ArtSection = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
       {ART_PROJECTS.map((project) => (
         <div key={project.id} className="relative group cursor-pointer aspect-square bg-white/5 overflow-hidden w-full max-w-full">
-           <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+           {project.image?.toLowerCase().endsWith('.mp4') ? (
+             <video
+               src={project.image}
+               muted
+               autoPlay
+               loop
+               playsInline
+               preload="metadata"
+               className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+             />
+           ) : (
+             <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+           )}
            <div className="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <h3 className="font-display font-bold text-xl">{project.title}</h3>
               <p className="font-mono text-[10px] text-gray-300 mt-1">{project.tags.join(' + ')}</p>
