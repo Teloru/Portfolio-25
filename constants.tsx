@@ -12,6 +12,16 @@ export const SECTIONS = [
 
 export const DEV_PROJECTS: Project[] = [
   {
+    id: 'unlzvc-decompressor',
+    title: 'UNLZVC Decompressor',
+    tags: ['Reverse Engineering', 'C', 'Python', 'Dreamcast'],
+    description: 'Reverse-engineered decompressor for Floigan Bros that extracts clean dialogue from Visual Concepts\' proprietary LZVC/IFF data; the tool was used in a Sega Dreamcast preservation article to compare prototype vs final game dialogues.',
+    year: '2025',
+    image: 'https://picsum.photos/600/400?random=8',
+    link: 'https://github.com/Teloru/unlzvc-decompressor',
+    articleLink: 'https://www.sega-dreamcast-info-games-preservation.com/floigan-bros-dreamcast-making-of-visual-concepts-prototype'
+  },
+  {
     id: '2d-puzzle',
     title: '2D Puzzle: Pipoufleur',
     tags: ['Raylib', 'C++', 'Game Dev'],
