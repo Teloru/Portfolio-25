@@ -215,7 +215,7 @@ const ExperienceSection = () => (
             </div>
             
             <div className="relative pl-8 group">
-              <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
+              <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2024 - Sep 2024 • Aix-en-Provence, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-white">Dassault Systèmes</h3>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">SE Intern • Additive Manufacturing</p>
