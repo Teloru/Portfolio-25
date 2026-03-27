@@ -213,6 +213,17 @@ const ExperienceSection = () => (
                 <li>Contributed to cybersecurity initiatives, enhancing pipeline and infrastructure security.</li>
               </ul>
             </div>
+
+            <div className="relative pl-8 group">
+              <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
+              <span className="font-mono text-[10px] text-white/50 mb-1 block">Oct 2024 - Mar 2025 • Castelnau-le-Lez, France</span>
+              <h3 className="font-display font-bold text-xl mb-1 text-gray-200">Ubisoft Montpellier</h3>
+              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">Mentee • Global Mentoring Program</p>
+              <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
+                <li>Developed a Tower Defense in C++ using SFML, mentored by a Lead Gameplay Programmer at Ubisoft Montpellier. Designed a modular, performance-oriented architecture following ECS patterns and AAA industry standards.</li>
+                <li>Documented the project in a <a href="https://www.youtube.com/watch?v=-2z1FbOyCks" target='_blank'>YouTube video</a> covering technical design decisions and implementation.</li>
+              </ul>
+            </div>
             
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
