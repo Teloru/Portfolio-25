@@ -46,17 +46,17 @@ const App: React.FC = () => {
       </nav>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#050505]/90 backdrop-blur-lg border-t border-white/10 p-4">
-        <div className="flex justify-between px-2">
-           {SECTIONS.slice(0, 4).map(s => (
-             <button 
-               key={s.id} 
-               onClick={() => setCurrentSection(s.id)} 
-               className={`text-[10px] font-mono ${currentSection === s.id ? 'text-white' : 'text-gray-500'}`}
-             >
-               {s.id.substring(0,3)}
-             </button>
-           ))}
+      <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#050505]/90 backdrop-blur-lg border-t border-white/10 px-2 py-3">
+        <div className="flex items-center w-full gap-2 px-1">
+          {SECTIONS.map(s => (
+            <button
+              key={s.id}
+              onClick={() => setCurrentSection(s.id)}
+              className={`flex-1 min-w-0 text-center text-[10px] font-mono uppercase tracking-wide py-1 border-b whitespace-nowrap transition-colors ${currentSection === s.id ? 'text-white border-white/60' : 'text-gray-500 border-transparent'}`}
+            >
+              {s.label.replace(/^\d+_/, '')}
+            </button>
+          ))}
         </div>
       </div>
 
