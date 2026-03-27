@@ -17,7 +17,7 @@ export const DEV_PROJECTS: Project[] = [
     tags: ['Reverse Engineering', 'C', 'Python', 'Dreamcast'],
     description: 'Reverse-engineered decompressor for Floigan Bros that extracts clean dialogue from Visual Concepts\' proprietary LZVC/IFF data; the tool was used in a Sega Dreamcast preservation article to compare prototype vs final game dialogues.',
     year: '2025',
-    image: 'https://picsum.photos/600/400?random=8',
+    image: '/img/unlzvc-preview.jpg',
     link: 'https://github.com/Teloru/unlzvc-decompressor',
     articleLink: 'https://www.sega-dreamcast-info-games-preservation.com/floigan-bros-dreamcast-making-of-visual-concepts-prototype'
   },
@@ -27,7 +27,7 @@ export const DEV_PROJECTS: Project[] = [
     tags: ['Raylib', 'C++', 'Game Dev'],
     description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
     year: '2023',
-    image: 'https://picsum.photos/600/400?random=2',
+    image: '/img/pipoufleur-preview.jpg',
     link: 'https://teloru.itch.io/pipoufleur'
   },
   {
