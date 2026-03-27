@@ -197,15 +197,16 @@ const ExperienceSection = () => (
           
           <div className="relative border-l border-white/10 ml-1 space-y-12">
 
-            <div className="relative pl-6 sm:pl-8 group">
+            <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Dec 2024 - today • Copenhagen, Denmark</span>
               <h3 className="font-display font-bold text-xl mb-1 text-white">H3D</h3>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D SE • Dental R&D Team</p>
+              <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
+                Development of advanced 3D dental scanning solutions with a focus on geometric processing and mesh optimization applied to patient scans.
+              </p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-              Development of advanced 3D dental scanning solutions with a focus on geometric processing and mesh optimization applied to patient scans.
-              <br/>
-                <li>Lead developer for Models in the dental portfolio, handling end-to-end algorithmic and production tasks.</li>
+                <li>Lead developer for Models and Retainers products in the dental portfolio, driving algorithmic improvements (geometrical processing) through to production releases; presents products at international dental trade shows</li>
                 <li>Led the Hugin project, reducing ML pipeline runtime by 5-10% by dynamically downloading model weights at runtime instead of embedding them in Docker images. This optimization accelerated CI/CD builds and cut execution time of large test sets by over an hour.</li>
                 <li>Coordinating Dental team releases and managed client account provisioning, ensuring smooth integration into production workflows.</li>
                 <li>Partnered closely with fullstack, AI, and product teams to align technical solutions with business objectives. </li>
