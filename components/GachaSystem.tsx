@@ -89,7 +89,7 @@ const GachaSystem: React.FC = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={pullGacha}
-        className="fixed bottom-10 right-10 z-50 bg-white text-black p-4 rounded-full shadow-2xl hover:bg-gray-200 transition-colors flex items-center justify-center"
+        className="fixed top-6 right-4 md:top-auto md:bottom-10 md:right-10 z-50 bg-white text-black p-4 rounded-full shadow-2xl hover:bg-gray-200 transition-colors flex items-center justify-center"
       >
         <Box size={20} strokeWidth={1.5} />
       </motion.button>
