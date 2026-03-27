@@ -14,7 +14,7 @@ export const DEV_PROJECTS: Project[] = [
   {
     id: '2d-puzzle',
     title: '2D Puzzle: Pipoufleur',
-    tags: ['Raylib', 'C++'],
+    tags: ['Raylib', 'C++', 'Game Dev'],
     description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
     year: '2023',
     image: 'https://picsum.photos/600/400?random=2',
@@ -23,7 +23,7 @@ export const DEV_PROJECTS: Project[] = [
   {
     id: 'develop-at-ubisoft',
     title: 'Develop at Ubisoft',
-    tags: ['SFML', 'C++'],
+    tags: ['SFML', 'C++', 'Game Dev'],
     description: 'Tower Defense game developed in C++ using SFML. The player must complete rhythm sequences to build towers and defend against waves of bunnies. Play it on itch.io!',
     year: '2024 - 2025',
     image: 'https://picsum.photos/600/400?random=3',
