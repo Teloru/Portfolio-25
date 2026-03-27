@@ -337,33 +337,6 @@ const FEATURED_YOUTUBE_VIDEOS = [
 
 const StreamSection = () => (
   <div className="w-full pb-20 pt-10 md:pt-0">
-    <div className="w-full aspect-video bg-white/5 relative overflow-hidden group mb-8 border border-white/10 rounded-lg max-h-[400px]">
-      <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
-         <Twitch size={48} className="text-white group-hover:scale-110 transition-transform duration-300" />
-      </div>
-      <img src="https://picsum.photos/800/450?grayscale" className="w-full h-full object-cover opacity-50" alt="Stream Background" />
-      <div className="absolute bottom-4 right-4 z-20 font-mono text-xs bg-red-600 text-white px-2 py-1 rounded animate-pulse">
-        OFFLINE
-      </div>
-    </div>
-    
-    <h2 className="font-display font-bold text-4xl mb-4">Twitch.tv</h2>
-    <p className="font-mono text-sm text-gray-400 mb-6 max-w-md">
-      Occasional streams on my Twitch channel-- Come take a look!
-    </p>
-    
-    <div className="flex gap-2 mb-8">
-      {['#sega', '#atlus', '#jrpg', '#retro'].map(tag => (
-        <span key={tag} className="text-[10px] font-mono border border-white/20 px-2 py-1 rounded-full text-white/60">
-          {tag}
-        </span>
-      ))}
-    </div>
-    
-    <a href="https://twitch.tv/teloru" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-mono text-xs text-white border-b border-white pb-1 w-max hover:text-gray-300 hover:border-gray-300 transition-colors mb-12">
-      twitch.tv/teloru <ArrowRight size={12} />
-    </a>
-
     <div className="mb-6">
       <span className="font-mono text-xs text-white/40 mb-2 block">04_TV_LOGS</span>
       <h3 className="font-display font-bold text-3xl md:text-4xl">Featured on YouTube</h3>
@@ -395,6 +368,33 @@ const StreamSection = () => (
           </div>
         </a>
       ))}
+    </div>
+
+    <div className="mt-10 border border-white/10 bg-white/5 rounded-lg p-4 sm:p-5">
+      <div className="flex items-start justify-between gap-4 mb-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-md bg-white/10 flex items-center justify-center">
+            <Twitch size={20} className="text-white" />
+          </div>
+          <div>
+            <h2 className="font-display font-bold text-2xl leading-none">Twitch.tv/teloru</h2>
+            <p className="font-mono text-xs text-gray-400 mt-1">Occasional live streams and retro/game-tech talks. Come take a look!</p>
+          </div>
+        </div>
+        <span className="font-mono text-[10px] bg-red-600 text-white px-2 py-1 rounded animate-pulse">OFFLINE</span>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        {['#sega', '#atlus', '#horror-game', '#retro', '#y2k'].map(tag => (
+          <span key={tag} className="text-[10px] font-mono border border-white/20 px-2 py-1 rounded-full text-white/60">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <a href="https://twitch.tv/teloru" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-mono text-xs text-white border-b border-white pb-1 w-max hover:text-gray-300 hover:border-gray-300 transition-colors">
+        twitch.tv/teloru <ArrowRight size={12} />
+      </a>
     </div>
   </div>
 );
