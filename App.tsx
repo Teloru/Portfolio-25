@@ -380,17 +380,17 @@ const StreamSection = () => (
     </div>
 
     <div className="mt-10 border border-white/10 bg-white/5 rounded-lg p-4 sm:p-5">
-      <div className="flex items-start justify-between gap-4 mb-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-md bg-white/10 flex items-center justify-center">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          <div className="w-10 h-10 aspect-square shrink-0 rounded-md bg-white/10 flex items-center justify-center">
             <Twitch size={20} className="text-white" />
           </div>
-          <div>
-            <h2 className="font-display font-bold text-2xl leading-none">Twitch.tv/teloru</h2>
+          <div className="min-w-0">
+            <h2 className="font-display font-bold text-lg sm:text-2xl leading-tight whitespace-nowrap">Twitch.tv/teloru</h2>
             <p className="font-mono text-xs text-gray-400 mt-1">Occasional live streams and retro/game-tech talks. Come take a look!</p>
           </div>
         </div>
-        <span className="font-mono text-[10px] bg-red-600 text-white px-2 py-1 rounded animate-pulse">OFFLINE</span>
+        <span className="font-mono text-[10px] bg-red-600 text-white px-2 py-1 rounded animate-pulse shrink-0">OFFLINE</span>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
