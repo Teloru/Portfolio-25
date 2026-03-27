@@ -42,7 +42,7 @@ export const DEV_PROJECTS: Project[] = [
     id: 'void-engine',
     title: 'Void Engine',
     tags: ['C++', 'OpenGL', 'No Engine'],
-    description: 'dream project, todo <3 I`d love to create my own engine.',
+    description: 'dream project, todo <3 I\'d love to create my own engine.',
     year: '???',
     image: 'https://picsum.photos/600/400?random=1'
   },
