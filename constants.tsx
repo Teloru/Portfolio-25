@@ -19,7 +19,10 @@ export const DEV_PROJECTS: Project[] = [
     year: '2025',
     image: '/img/unlzvc-preview.jpg',
     link: 'https://github.com/Teloru/unlzvc-decompressor',
-    articleLink: 'https://www.sega-dreamcast-info-games-preservation.com/floigan-bros-dreamcast-making-of-visual-concepts-prototype'
+    extraLink: {
+      label: 'Sega Dreamcast Preservation Article',
+      url: 'https://www.sega-dreamcast-info-games-preservation.com/floigan-bros-dreamcast-making-of-visual-concepts-prototype'
+    }
   },
   {
     id: '2d-puzzle',
@@ -33,11 +36,15 @@ export const DEV_PROJECTS: Project[] = [
   {
     id: 'develop-at-ubisoft',
     title: 'Develop at Ubisoft',
-    tags: ['SFML', 'C++', 'Game Dev'],
+    tags: ['SFML', 'C++', 'Game Dev', 'Isometric view'],
     description: 'Tower Defense game developed in C++ using SFML. The player must complete rhythm sequences to build towers and defend against waves of bunnies. Play it on itch.io!',
     year: '2024 - 2025',
-    image: 'https://picsum.photos/600/400?random=3',
-    link: 'https://gitlab.com/Astrid-Beyer/develop-at-ubisoft'
+    image: '/img/develop-at-ubisoft-preview.jpg',
+    link: 'https://gitlab.com/Astrid-Beyer/develop-at-ubisoft',
+    extraLink: {
+      label: 'YouTube video',
+      url: 'https://www.youtube.com/watch?v=-2z1FbOyCks'
+    }
   },
   {
     id: 'teloboup',
@@ -45,7 +52,7 @@ export const DEV_PROJECTS: Project[] = [
     tags: ['Discord.js', 'Node'],
     description: 'A Discord bot designed to enhance my community server with fun commands and moderation tools. Open to contributions!',
     year: '2023 - today',
-    image: 'https://picsum.photos/600/400?random=4',
+    image: '/img/teloboup-preview.jpg',
     link: 'https://gitlab.com/Astrid-Beyer/teloboup-discord-bot'
   },
     {
