@@ -151,9 +151,9 @@ const DevSection = () => (
                       Project Link
                     </a>
                   )}
-                  {project.articleLink && (
-                    <a href={project.articleLink} target="_blank" rel="noreferrer" className="text-white/70 border-b border-white/30 hover:text-white hover:border-white transition-colors">
-                      Sega Dreamcast Preservation Article
+                  {project.extraLink && (
+                    <a href={project.extraLink.url} target="_blank" rel="noreferrer" className="text-white/70 border-b border-white/30 hover:text-white hover:border-white transition-colors">
+                      {project.extraLink.label}
                     </a>
                   )}
                 </div>
