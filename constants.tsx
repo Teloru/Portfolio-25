@@ -13,12 +13,12 @@ export const SECTIONS = [
 export const DEV_PROJECTS: Project[] = [
   {
     id: '2d-puzzle',
-    title: '2D Puzzle',
+    title: '2D Puzzle: Pipoufleur',
     tags: ['Raylib', 'C++'],
     description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
     year: '2023',
     image: 'https://picsum.photos/600/400?random=2',
-    link: 'https://gitlab.com/Astrid-Beyer/videogame-cpp'
+    link: 'https://teloru.itch.io/pipoufleur'
   },
   {
     id: 'develop-at-ubisoft',
