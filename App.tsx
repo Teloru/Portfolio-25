@@ -311,8 +311,32 @@ const ExperienceSection = () => (
    </div>
 );
 
+const FEATURED_YOUTUBE_VIDEOS = [
+  {
+    id: 'rayman-30th-reverse-engineering',
+    title: 'Rayman 30th: The Internet Got It Wrong',
+    description: 'I explain why this release is much more than simple emulation by breaking down the technical choices behind it.',
+    thumbnail: 'https://img.youtube.com/vi/jU6bSHefllQ/hqdefault.jpg',
+    link: 'https://www.youtube.com/watch?v=jU6bSHefllQ'
+  },
+  {
+    id: 'jsr-prototype-analysis',
+    title: 'Jet Set Radio Prototype & the US Grind Radio – Game Preservation ',
+    description: 'A guided analysis of the JSR prototype, including what it reveals about development decisions and cut content.',
+    thumbnail: 'https://img.youtube.com/vi/ngTHrhJjtLs/hqdefault.jpg',
+    link: 'https://www.youtube.com/watch?v=ngTHrhJjtLs&t=13s'
+  },
+  {
+    id: 'ubisoft-mentorship-talk',
+    title: 'Ubisoft Mentored Me. I Made This UNLIKELY Game',
+    description: 'I talk about my Ubisoft mentorship journey, the challenges, and the professional growth that came with it.',
+    thumbnail: 'https://img.youtube.com/vi/-2z1FbOyCks/hqdefault.jpg',
+    link: 'https://www.youtube.com/watch?v=-2z1FbOyCks&t=10s'
+  }
+];
+
 const StreamSection = () => (
-  <div className="h-full flex flex-col justify-center">
+  <div className="w-full pb-20 pt-10 md:pt-0">
     <div className="w-full aspect-video bg-white/5 relative overflow-hidden group mb-8 border border-white/10 rounded-lg max-h-[400px]">
       <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
          <Twitch size={48} className="text-white group-hover:scale-110 transition-transform duration-300" />
@@ -336,9 +360,42 @@ const StreamSection = () => (
       ))}
     </div>
     
-    <a href="https://twitch.tv/teloru" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-mono text-xs text-white border-b border-white pb-1 w-max hover:text-gray-300 hover:border-gray-300 transition-colors">
+    <a href="https://twitch.tv/teloru" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-mono text-xs text-white border-b border-white pb-1 w-max hover:text-gray-300 hover:border-gray-300 transition-colors mb-12">
       twitch.tv/teloru <ArrowRight size={12} />
     </a>
+
+    <div className="mb-6">
+      <span className="font-mono text-xs text-white/40 mb-2 block">04_TV_LOGS</span>
+      <h3 className="font-display font-bold text-3xl md:text-4xl">Featured on YouTube</h3>
+    </div>
+
+    <div className="grid grid-cols-1 gap-6">
+      {FEATURED_YOUTUBE_VIDEOS.map((video) => (
+        <a
+          key={video.id}
+          href={video.link}
+          target="_blank"
+          rel="noreferrer"
+          className="group block border border-white/10 bg-white/5 p-3 sm:p-4 rounded-lg hover:border-white/30 transition-colors"
+        >
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="w-full sm:w-48 md:w-56 aspect-video overflow-hidden rounded-md border border-white/10 bg-black/40">
+              <img
+                src={video.thumbnail}
+                alt={`${video.title} thumbnail`}
+                loading="lazy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="flex-1">
+              <h4 className="font-display text-xl text-white group-hover:text-white/90 transition-colors mb-2">{video.title}</h4>
+              <p className="font-mono text-xs text-gray-400 leading-relaxed max-w-2xl">{video.description}</p>
+            </div>
+            <ArrowRight size={14} className="mt-1 text-white/60 group-hover:text-white transition-colors sm:mt-2" />
+          </div>
+        </a>
+      ))}
+    </div>
   </div>
 );
 
