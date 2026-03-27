@@ -34,6 +34,15 @@ export const DEV_PROJECTS: Project[] = [
     link: 'https://teloru.itch.io/pipoufleur'
   },
   {
+    id: 'open-gl',
+    title: 'Bike Crankset Animation',
+    tags: ['Qt', 'OpenGL', 'C++', 'VBO', 'Shaders'],
+    description: 'University graphics project: animated a bicycle crankset in Qt/C++ with OpenGL (VBO + shaders, no VAO), featuring dual-textured sprockets, alternating chain links, Phong-smoothed cylinders, and diffuse/ambient lighting with keyboard and non-modal UI controls.',
+    year: '2023',
+    image: '/img/opengl-preview.jpg',
+    link: 'https://gitlab.com/Astrid-Beyer/opengl'
+  },
+  {
     id: 'develop-at-ubisoft',
     title: 'Develop at Ubisoft',
     tags: ['SFML', 'C++', 'Game Dev', 'Isometric view'],
