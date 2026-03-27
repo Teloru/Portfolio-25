@@ -16,7 +16,10 @@ export interface Project {
   description: string;
   image?: string;
   link?: string;
-  articleLink?: string;
+  extraLink?: {
+    label: string;
+    url: string;
+  };
   year: string;
 }
 
