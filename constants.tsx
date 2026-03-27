@@ -12,15 +12,7 @@ export const SECTIONS = [
 
 export const DEV_PROJECTS: Project[] = [
   {
-    id: 'p1',
-    title: 'Void Engine',
-    tags: ['C++', 'OpenGL', 'No Engine'],
-    description: 'dream project, todo <3',
-    year: '???',
-    image: 'https://picsum.photos/600/400?random=1'
-  },
-  {
-    id: 'p2',
+    id: '2d-puzzle',
     title: '2D Puzzle',
     tags: ['Raylib', 'C++'],
     description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
@@ -29,7 +21,7 @@ export const DEV_PROJECTS: Project[] = [
     link: 'https://gitlab.com/Astrid-Beyer/videogame-cpp'
   },
   {
-    id: 'p3',
+    id: 'develop-at-ubisoft',
     title: 'Develop at Ubisoft',
     tags: ['SFML', 'C++'],
     description: 'Tower Defense game developed in C++ using SFML. The player must complete rhythm sequences to build towers and defend against waves of bunnies. Play it on itch.io!',
@@ -38,19 +30,27 @@ export const DEV_PROJECTS: Project[] = [
     link: 'https://gitlab.com/Astrid-Beyer/develop-at-ubisoft'
   },
   {
-    id: 'p4',
+    id: 'teloboup',
     title: 'Teloboup',
     tags: ['Discord.js', 'Node'],
     description: 'A Discord bot designed to enhance my community server with fun commands and moderation tools. Open to contributions!',
     year: '2023 - today',
     image: 'https://picsum.photos/600/400?random=4',
     link: 'https://gitlab.com/Astrid-Beyer/teloboup-discord-bot'
-  }
+  },
+    {
+    id: 'void-engine',
+    title: 'Void Engine',
+    tags: ['C++', 'OpenGL', 'No Engine'],
+    description: 'dream project, todo <3',
+    year: '???',
+    image: 'https://picsum.photos/600/400?random=1'
+  },
 ];
 
 export const ART_PROJECTS: Project[] = [
   {
-    id: 'a1',
+    id: 'cyber-angel',
     title: 'Cyber Angel',
     tags: ['Blender', '3D', 'Eevee'],
     description: 'Character model for a V-Tuber concept. Modeled, rigged, and textured in Blender.',
@@ -58,7 +58,7 @@ export const ART_PROJECTS: Project[] = [
     image: 'https://picsum.photos/600/400?random=4'
   },
   {
-    id: 'a2',
+    id: 'neo-tokyo-alley',
     title: 'Neo-Tokyo Alley',
     tags: ['Blender', 'Cycles'],
     description: 'Atmospheric environment study focusing on volumetric lighting and cyberpunk aesthetics.',
@@ -66,7 +66,7 @@ export const ART_PROJECTS: Project[] = [
     image: 'https://picsum.photos/600/400?random=5'
   },
   {
-    id: 'a3',
+    id: 'y2k-icons',
     title: 'Y2K Icons',
     tags: ['2D', 'Digital Art'],
     description: 'Vector asset pack designed for stream overlays and web interfaces.',
