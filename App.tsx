@@ -138,8 +138,17 @@ const DevSection = () => (
       {DEV_PROJECTS.map((project, i) => (
         <div key={project.id} className="group">
           <div className="relative mb-6 overflow-hidden">
-            <div className="absolute inset-0 bg-white/5 z-10 group-hover:bg-transparent transition-colors duration-500" />
-            <img src={project.image} alt={project.title} className="w-full aspect-[16/9] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" />
+            {project.link ? (
+              <a href={project.link} target="_blank" rel="noreferrer" className="block" aria-label={`Open ${project.title}`}>
+                <div className="absolute inset-0 bg-white/5 z-10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
+                <img src={project.image} alt={project.title} className="w-full aspect-[16/9] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" />
+              </a>
+            ) : (
+              <>
+                <div className="absolute inset-0 bg-white/5 z-10 group-hover:bg-transparent transition-colors duration-500" />
+                <img src={project.image} alt={project.title} className="w-full aspect-[16/9] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" />
+              </>
+            )}
           </div>
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
             <div>
