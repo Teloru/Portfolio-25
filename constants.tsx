@@ -25,15 +25,6 @@ export const DEV_PROJECTS: Project[] = [
     }
   },
   {
-    id: '2d-puzzle',
-    title: '2D Puzzle: Pipoufleur',
-    tags: ['Raylib', 'C++', 'Game Dev'],
-    description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
-    year: '2023',
-    image: '/img/pipoufleur-preview.jpg',
-    link: 'https://teloru.itch.io/pipoufleur'
-  },
-  {
     id: 'open-gl',
     title: 'Bike Crankset Animation',
     tags: ['Qt', 'OpenGL', 'C++', 'VBO', 'Shaders'],
@@ -53,6 +44,32 @@ export const DEV_PROJECTS: Project[] = [
     extraLink: {
       label: 'YouTube video',
       url: 'https://www.youtube.com/watch?v=-2z1FbOyCks'
+    }
+  },
+  {
+    id: 'ttk-reeb-graph',
+    title: 'Information Extraction from 3D shapes using Reeb Graphs and a specific shape index',
+    tags: ['C++', '3D Geometry', 'Reeb Graphs', 'TTK', 'R&D', 'Filtering'],
+    description: 'Research internship project at LIS Lab using Reeb graphs and shape indexing (TTK library) to analyze 3D mesh topology for classification, segmentation, and simplification tasks. You can read the paper I wrote about it, or watch a 60-second video summary of my research on LinkedIn!',
+    year: '2023',
+    image: '/img/reeb-graph-preview.jpg',
+    link: 'https://teloru.gitlab.io/extraction_information_3d_shape_reeb.pdf',
+    extraLink: {
+      label: 'My research in 60 seconds (video)',
+      url: 'https://www.linkedin.com/posts/astrid-be_recherche-science-maillage-activity-7071757631505199105-pErz/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC9cNjQBSKmsl7_Jn427q3wOPKlBufbHdRw'
+    }
+  },
+  {
+    id: '2d-puzzle',
+    title: '2D Puzzle: Pipoufleur',
+    tags: ['Raylib', 'C++', 'Game Dev'],
+    description: 'Student project built using Raylib. Play as a little hamster watering flowers. Don\'t get stuck!',
+    year: '2023',
+    image: '/img/pipoufleur-preview.jpg',
+    link: 'https://teloru.itch.io/pipoufleur',
+    extraLink: {
+      label: 'Source code on Gitlab',
+      url: 'https://gitlab.com/Astrid-Beyer/videogame-cpp'
     }
   },
   {
