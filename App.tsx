@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<SectionType>(SectionType.HOME);
+  const [selectedProject, setSelectedProject] = useState<typeof ART_PROJECTS[0] | null>(null);
 
   return (
     <div className="relative w-full min-h-screen bg-[#050505] text-white overflow-x-hidden flex font-sans selection:bg-white selection:text-black">
@@ -75,7 +76,7 @@ const App: React.FC = () => {
               <div className="min-h-full w-full p-4 sm:p-6 md:p-8 lg:p-6 xl:p-4 pt-28 md:pt-12 flex flex-col justify-center overflow-x-hidden">
                 {currentSection === SectionType.HOME && <HomeSection setCurrentSection={setCurrentSection} />}
                 {currentSection === SectionType.DEV && <DevSection />}
-                {currentSection === SectionType.ART && <ArtSection />}
+                {currentSection === SectionType.ART && <ArtSection onProjectClick={setSelectedProject} />}
                 {currentSection === SectionType.XP && <ExperienceSection />}
                 {currentSection === SectionType.STREAM && <StreamSection />}
                 {currentSection === SectionType.CONTACT && <ContactSection />}
@@ -86,6 +87,75 @@ const App: React.FC = () => {
       </main>
 
       <GachaSystem />
+
+      {/* Lightbox Modal - Rendered at root level */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+            onClick={() => setSelectedProject(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="relative max-w-6xl max-h-[90vh] flex flex-col items-center pointer-events-none"
+            >
+              {/* Image or Video */}
+              <div className="relative w-auto h-auto max-h-[80vh] flex items-center justify-center pointer-events-auto">
+                {selectedProject.image?.toLowerCase().endsWith('.mp4') ? (
+                  <video
+                    src={selectedProject.image}
+                    autoPlay
+                    loop
+                    playsInline
+                    controls
+                    className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
+              </div>
+
+              {/* Info & Instagram Link */}
+              <div className="mt-6 text-center pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                <h3 className="font-display font-bold text-2xl text-white mb-2">
+                  {selectedProject.title}
+                </h3>
+                <p className="font-mono text-xs text-gray-400 mb-4">
+                  {selectedProject.tags.join(' • ')}
+                </p>
+                
+                {selectedProject.instagramLink && (
+                  <a
+                    href={selectedProject.instagramLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 font-mono text-xs text-white/70 border-b border-white/30 hover:text-white hover:border-white transition-colors"
+                  >
+                    ♡ like it on my Instagram
+                  </a>
+                )}
+              </div>
+
+              {/* Close hint */}
+              <p className="mt-4 text-white/40 text-xs font-mono pointer-events-none">
+                Click outside to close
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -181,38 +251,44 @@ const DevSection = () => (
   </div>
 );
 
-const ArtSection = () => (
-  <div className="w-full pb-20 pt-10 md:pt-0">
-     <div className="mb-12">
-       <span className="font-mono text-xs text-white/40 mb-2 block">03_CREATIVE</span>
-       <h2 className="font-display font-bold text-4xl md:text-5xl">Digital Atelier</h2>
-       <p className="font-mono text-xs text-gray-500 mt-4"><a className='border-b border-white/30' href="https://www.instagram.com/teloru_/" target="_blank">@teloru</a> • Blender • Clip Studio Paint • Photoshop • Davinci Resolve</p>
+const ArtSection = ({ onProjectClick }: { onProjectClick: (project: typeof ART_PROJECTS[0]) => void }) => {
+  return (
+    <div className="w-full pb-20 pt-10 md:pt-0">
+       <div className="mb-12">
+         <span className="font-mono text-xs text-white/40 mb-2 block">03_CREATIVE</span>
+         <h2 className="font-display font-bold text-4xl md:text-5xl">Digital Atelier</h2>
+         <p className="font-mono text-xs text-gray-500 mt-4"><a className='border-b border-white/30' href="https://www.instagram.com/teloru_/" target="_blank">@teloru</a> • Blender • Clip Studio Paint • Photoshop • Davinci Resolve</p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+        {ART_PROJECTS.map((project) => (
+          <div 
+            key={project.id} 
+            className="relative group cursor-pointer aspect-square bg-white/5 overflow-hidden w-full max-w-full"
+            onClick={() => onProjectClick(project)}
+          >
+             {project.image?.toLowerCase().endsWith('.mp4') ? (
+               <video
+                 src={project.image}
+                 muted
+                 autoPlay
+                 loop
+                 playsInline
+                 preload="metadata"
+                 className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+               />
+             ) : (
+               <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+             )}
+             <div className="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="font-display font-bold text-xl">{project.title}</h3>
+                <p className="font-mono text-[10px] text-gray-300 mt-1">{project.tags.join(' + ')}</p>
+             </div>
+          </div>
+        ))}
+      </div>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-      {ART_PROJECTS.map((project) => (
-        <div key={project.id} className="relative group cursor-pointer aspect-square bg-white/5 overflow-hidden w-full max-w-full">
-           {project.image?.toLowerCase().endsWith('.mp4') ? (
-             <video
-               src={project.image}
-               muted
-               autoPlay
-               loop
-               playsInline
-               preload="metadata"
-               className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
-             />
-           ) : (
-             <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-           )}
-           <div className="absolute bottom-0 left-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <h3 className="font-display font-bold text-xl">{project.title}</h3>
-              <p className="font-mono text-[10px] text-gray-300 mt-1">{project.tags.join(' + ')}</p>
-           </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+  );
+};
 
 const ExperienceSection = () => (
    <div className="max-w-full lg:max-w-3xl w-full pb-24 pt-10 md:pt-0">

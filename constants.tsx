@@ -81,7 +81,8 @@ export const ART_PROJECTS: Project[] = [
     tags: ['Blender', '3D', 'Character'],
     description: 'Photo and 3D character crossover experiment.',
     year: '2024',
-    image: '/img/art-lab/selfie_with_3d_me.jpg'
+    image: '/img/art-lab/selfie_with_3d_me.jpg',
+    instagramLink: 'https://www.instagram.com/teloru_/p/CwvQ4_mK4zm/'
   },
   {
     id: 'nds-clip',
@@ -89,7 +90,8 @@ export const ART_PROJECTS: Project[] = [
     tags: ['3D', 'Animation', 'Video'],
     description: 'Experimental short clip from my art lab folder.',
     year: '2024',
-    image: '/img/art-lab/nds.mp4'
+    image: '/img/art-lab/nds.mp4',
+    instagramLink: 'https://www.instagram.com/teloru_/reel/CvXagmFKG7L/'
   },
   {
     id: 'lowpoly-me',
@@ -97,7 +99,8 @@ export const ART_PROJECTS: Project[] = [
     tags: ['Blender', 'Low Poly', 'Turntable'],
     description: 'Short turntable capture of a lowpoly self-character.',
     year: '2024',
-    image: '/img/art-lab/lowpoly_me.mp4'
+    image: '/img/art-lab/lowpoly_me.mp4',
+    instagramLink: 'https://www.instagram.com/teloru_/p/DKZk3pOMjIt/'
   },
   {
     id: 'drawing-01',
@@ -105,7 +108,8 @@ export const ART_PROJECTS: Project[] = [
     tags: ['2D', 'Digital Art'],
     description: 'Personal digital illustration study.',
     year: '2023',
-    image: '/img/art-lab/drawing_01.jpeg'
+    image: '/img/art-lab/drawing_01.jpeg',
+    instagramLink: 'https://www.instagram.com/teloru_/p/Cj5MIIaK1uM/'
   }
 ];
 

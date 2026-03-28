@@ -20,6 +20,7 @@ export interface Project {
     label: string;
     url: string;
   };
+  instagramLink?: string;
   year: string;
 }
 
