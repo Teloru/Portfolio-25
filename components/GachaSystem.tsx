@@ -9,7 +9,7 @@ const PERSONALITIES: Personality[] = [
   {
     id: 'STREAMER',
     name: 'Content creator & gamer',
-    description: 'todo',
+    description: 'I rlly like this headset... but the quality could be better ngl',
     modelPath: '/objects/astrid_stream.glb',
     color: '#FF7EDB',
     tags: ['Twitch', 'YouTube', 'Community']
@@ -17,7 +17,7 @@ const PERSONALITIES: Personality[] = [
   {
     id: 'DEVELOPER',
     name: '3D R&D Developer',
-    description: 'Graphics engineer xxx',
+    description: 'Graphics engineering by day',
     modelPath: '/objects/astrid_research.glb',
     color: '#B4FEE7',
     tags: ['C++', 'OpenGL', 'Research']
@@ -25,7 +25,7 @@ const PERSONALITIES: Personality[] = [
   {
     id: 'ARTIST',
     name: '2D/3D Artist',
-    description: 'todo',
+    description: 'If it\'s 3D, I\'m in!! (also 2D art is fun) (any art related to a computer, actually)',
     modelPath: '/objects/astrid_art.glb',
     color: '#D6BBFB',
     tags: ['Blender', '2D Art', 'Design']
