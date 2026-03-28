@@ -42,7 +42,9 @@ const Model3D: React.FC<Model3DProps> = ({ modelPath }) => {
         <pointLight position={[0, 10, 0]} intensity={1} />
         <Model modelPath={modelPath} />
         <OrbitControls 
-          enableZoom={false} 
+          enableZoom={true}
+          minDistance={2}
+          maxDistance={5}
           enablePan={false}
           minPolarAngle={Math.PI / 3}
           maxPolarAngle={Math.PI / 1.5}
