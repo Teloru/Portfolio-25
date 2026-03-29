@@ -62,18 +62,19 @@ const App: React.FC = () => {
       </div>
 
       {/* Main Content Area - Slide in from Right/Bottom */}
-      <main className="absolute inset-0 z-10 flex flex-col items-end justify-center pointer-events-none">
-        <div className="w-full md:w-[60%] lg:w-[50%] h-full md:h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto overflow-hidden max-w-full">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSection}
-              initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -50, filter: 'blur(10px)' }}
-              transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
-              className="h-full w-full overflow-y-auto no-scrollbar"
-            >
-              <div className="min-h-full w-full p-4 sm:p-6 md:p-8 lg:p-6 xl:p-4 pt-28 md:pt-12 flex flex-col justify-center overflow-x-hidden">
+      <main className="absolute inset-0 z-10 overflow-y-auto pointer-events-auto">
+        <div className="w-full min-h-screen flex flex-col items-end justify-center pointer-events-none">
+          <div className={`w-full md:w-[60%] lg:w-[50%] min-h-screen md:min-h-[90vh] md:mr-4 lg:mr-12 xl:mr-24 pointer-events-auto max-w-full ${currentSection === SectionType.HOME ? '' : 'md:my-[5vh]'}`}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSection}
+                initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -50, filter: 'blur(10px)' }}
+                transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
+                className="w-full"
+              >
+                <div className={`w-full p-4 sm:p-6 md:p-8 lg:p-6 xl:p-4 pt-28 md:pt-12 flex flex-col justify-center overflow-x-hidden ${currentSection === SectionType.HOME ? 'min-h-screen md:min-h-[90vh]' : 'min-h-full'}`}>
                 {currentSection === SectionType.HOME && <HomeSection setCurrentSection={setCurrentSection} />}
                 {currentSection === SectionType.DEV && <DevSection />}
                 {currentSection === SectionType.ART && <ArtSection onProjectClick={setSelectedProject} />}
@@ -83,6 +84,7 @@ const App: React.FC = () => {
               </div>
             </motion.div>
           </AnimatePresence>
+        </div>
         </div>
       </main>
 
