@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Icosahedron, MeshTransmissionMaterial, Float, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,10 +11,21 @@ interface SceneProps {
 const GeometricForm = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const wireframeRef = useRef<THREE.Mesh>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
   
   // Responsive scale
   const scale = Math.min(viewport.width, viewport.height) * 0.3;
+
+  useEffect(() => {
+    const handlePointerMove = (event: PointerEvent) => {
+      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    return () => window.removeEventListener('pointermove', handlePointerMove);
+  }, []);
 
   useFrame((state) => {
     if (!meshRef.current || !wireframeRef.current) return;
@@ -30,8 +41,8 @@ const GeometricForm = () => {
     wireframeRef.current.rotation.y = t * 0.1;
 
     // Mouse parallax
-    const x = (state.pointer.x * viewport.width) / 4;
-    const y = (state.pointer.y * viewport.height) / 4;
+    const x = (mouseRef.current.x * viewport.width) / 4;
+    const y = (mouseRef.current.y * viewport.height) / 4;
     
     meshRef.current.position.x += (x - meshRef.current.position.x) * 0.05;
     meshRef.current.position.y += (y - meshRef.current.position.y) * 0.05;
