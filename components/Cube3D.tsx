@@ -8,24 +8,46 @@ interface SceneProps {
   currentSection: SectionType;
 }
 
+const isMobile = () =>
+  typeof window !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
 const GeometricForm = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const wireframeRef = useRef<THREE.Mesh>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const gyroRef = useRef({ x: 0, y: 0 });
+  const mobile = isMobile();
   const { viewport } = useThree();
   
   // Responsive scale
   const scale = Math.min(viewport.width, viewport.height) * 0.3;
 
   useEffect(() => {
-    const handlePointerMove = (event: PointerEvent) => {
-      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    };
+    if (mobile) {
+      // DeviceOrientation: gamma = left/right tilt, beta = front/back tilt
+      const handleOrientation = (event: DeviceOrientationEvent) => {
+        const gamma = event.gamma ?? 0; // -90 to 90, positive = tilted right
+        const beta = event.beta ?? 0;   // -180 to 180, positive = tilted forward
 
-    window.addEventListener('pointermove', handlePointerMove);
-    return () => window.removeEventListener('pointermove', handlePointerMove);
-  }, []);
+        // Clamp to reasonable range and normalize to [-1, 1]
+        // Invert: tilt right → mesh goes left
+        gyroRef.current.x = -Math.max(-1, Math.min(1, gamma / 30));
+        gyroRef.current.y = -Math.max(-1, Math.min(1, (beta - 45) / 30));
+      };
+
+      window.addEventListener('deviceorientation', handleOrientation);
+      return () => window.removeEventListener('deviceorientation', handleOrientation);
+    } else {
+      const handlePointerMove = (event: PointerEvent) => {
+        mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      };
+
+      window.addEventListener('pointermove', handlePointerMove);
+      return () => window.removeEventListener('pointermove', handlePointerMove);
+    }
+  }, [mobile]);
 
   useFrame((state) => {
     if (!meshRef.current || !wireframeRef.current) return;
@@ -40,12 +62,21 @@ const GeometricForm = () => {
     wireframeRef.current.rotation.x = t * 0.1;
     wireframeRef.current.rotation.y = t * 0.1;
 
-    // Mouse parallax
-    const x = (mouseRef.current.x * viewport.width) / 4;
-    const y = (mouseRef.current.y * viewport.height) / 4;
-    
-    meshRef.current.position.x += (x - meshRef.current.position.x) * 0.05;
-    meshRef.current.position.y += (y - meshRef.current.position.y) * 0.05;
+    if (mobile) {
+      // Gyroscope parallax: subtle drift based on phone tilt
+      const x = gyroRef.current.x * (viewport.width / 5);
+      const y = gyroRef.current.y * (viewport.height / 5);
+
+      meshRef.current.position.x += (x - meshRef.current.position.x) * 0.03;
+      meshRef.current.position.y += (y - meshRef.current.position.y) * 0.03;
+    } else {
+      // Mouse parallax
+      const x = (mouseRef.current.x * viewport.width) / 4;
+      const y = (mouseRef.current.y * viewport.height) / 4;
+      
+      meshRef.current.position.x += (x - meshRef.current.position.x) * 0.05;
+      meshRef.current.position.y += (y - meshRef.current.position.y) * 0.05;
+    }
   });
 
   const materialProps = useMemo(() => ({
