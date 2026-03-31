@@ -33,7 +33,7 @@ const GeometricForm = () => {
         // Clamp to reasonable range and normalize to [-1, 1]
         // Invert: tilt right → mesh goes left
         gyroRef.current.x = -Math.max(-1, Math.min(1, gamma / 30));
-        gyroRef.current.y = -Math.max(-1, Math.min(1, (beta - 45) / 30));
+        gyroRef.current.y = -Math.max(-1, Math.min(1, (beta - 90) / 30));
       };
 
       window.addEventListener('deviceorientation', handleOrientation);
