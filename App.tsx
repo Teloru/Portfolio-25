@@ -309,7 +309,10 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Dec 2024 - today • Copenhagen, Denmark</span>
-              <h3 className="font-display font-bold text-xl mb-1 text-white">H3D</h3>
+              <div className="mb-1 flex items-start justify-between gap-3">
+                <h3 className="font-display font-bold text-xl text-white">H3D</h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">MedTech</span>
+              </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D R&D SE • Dental R&D Team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Development of advanced 3D dental scanning solutions with a focus on geometric processing and mesh optimization applied to patient scans.
@@ -326,7 +329,10 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Oct 2024 - Mar 2025 • Castelnau-le-Lez, France</span>
-              <h3 className="font-display font-bold text-xl mb-1 text-gray-200">Ubisoft Montpellier</h3>
+              <div className="mb-1 flex items-start justify-between gap-3">
+                <h3 className="font-display font-bold text-xl text-gray-200">Ubisoft Montpellier</h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Video Game</span>
+              </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">Programming Mentee • Global Mentoring Program</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Participation in a mentorship program with Ubisoft, designed to support young talent in developing their programming skills. Developed a Tower Defense in C++ using <a className="text-white underline underline-offset-2 decoration-white/80 hover:text-white/85" target="_blank" rel="noopener noreferrer" href="https://www.sfml-dev.org/fr/">SFML</a>, focusing on real-time rendering logic and spatial representation in a pseudo-3D environment.</p>
@@ -342,7 +348,10 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2024 - Sep 2024 • Aix-en-Provence, France</span>
-              <h3 className="font-display font-bold text-xl mb-1 text-white">Dassault Systèmes</h3>
+              <div className="mb-1 flex items-start justify-between gap-3">
+                <h3 className="font-display font-bold text-xl text-white">Dassault Systèmes</h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Industry 5.0</span>
+              </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D SE Intern • Additive Manufacturing</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Six-month graduation internship. Developed a customizable post-processing pipeline for generating machine-specific G-code within the 3DEXPERIENCE platform, bridging 3D model data and physical fabrication constraints.
@@ -360,7 +369,10 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2023 - Jun 2023 • Marseille, France</span>
-              <h3 className="font-display font-bold text-xl mb-1 text-gray-200">LIS Lab</h3>
+              <div className="mb-1 flex items-start justify-between gap-3">
+                <h3 className="font-display font-bold text-xl text-gray-200">LIS Lab</h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Research Lab</span>
+              </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CG Researcher Intern • G-Mod Team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Research internship project at LIS Lab using Reeb graphs and shape indexing (TTK library) to analyze 3D mesh topology for classification, segmentation, and simplification tasks.
@@ -375,7 +387,10 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2022 - Aug 2022 • La Ciotat, France</span>
-              <h3 className="font-display font-bold text-xl mb-1 text-gray-200">Iconik</h3>
+              <div className="mb-1 flex items-start justify-between gap-3">
+                <h3 className="font-display font-bold text-xl text-gray-200">Iconik</h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Video Game</span>
+              </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CMS Developer Intern • Communication team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Led development of Iconik's website (WordPress) for VR video game services
