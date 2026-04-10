@@ -5,6 +5,7 @@ import GachaSystem from './components/GachaSystem';
 import { SECTIONS, DEV_PROJECTS, ART_PROJECTS } from './constants';
 import { ArrowRight, Github, Linkedin, Mail, Twitch, Coffee, MapPin, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import './App.css';
 
 const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<SectionType>(SectionType.HOME);
@@ -309,9 +310,9 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Dec 2024 - today • Copenhagen, Denmark</span>
-              <div className="mb-1 flex items-start justify-between gap-3">
+              <div className="xp-domain-row">
                 <h3 className="font-display font-bold text-xl text-white">H3D</h3>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">MedTech</span>
+                <span className="xp-domain-tag">MedTech</span>
               </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D R&D SE • Dental R&D Team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
@@ -329,28 +330,28 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Oct 2024 - Mar 2025 • Castelnau-le-Lez, France</span>
-              <div className="mb-1 flex items-start justify-between gap-3">
+              <div className="xp-domain-row">
                 <h3 className="font-display font-bold text-xl text-gray-200">Ubisoft Montpellier</h3>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Video Game</span>
+                <span className="xp-domain-tag">Video Game</span>
               </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">Programming Mentee • Global Mentoring Program</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
-                Participation in a mentorship program with Ubisoft, designed to support young talent in developing their programming skills. Developed a Tower Defense in C++ using <a className="text-white underline underline-offset-2 decoration-white/80 hover:text-white/85" target="_blank" rel="noopener noreferrer" href="https://www.sfml-dev.org/fr/">SFML</a>, focusing on real-time rendering logic and spatial representation in a pseudo-3D environment.</p>
+                Participation in a mentorship program with Ubisoft, designed to support young talent in developing their programming skills. Developed a Tower Defense in C++ using <a className="xp-link" target="_blank" rel="noopener noreferrer" href="https://www.sfml-dev.org/fr/">SFML</a>, focusing on real-time rendering logic and spatial representation in a pseudo-3D environment.</p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
                 <li>Implemented an isometric rendering system using a 2D library (no engine), leveraging draw order and spatial sorting to simulate depth.</li>
                 <li>Designed a multi-orientation view system (4 camera rotations), dynamically recomputing scene layout and entity positioning based on player perspective.</li>
                 <li>Applied angle-based transformations and coordinate remapping to support seamless board rotation and consistent gameplay logic across views.</li>
                 <li>Managed dynamic entities (e.g. projectiles) with a lightweight lifecycle system, handling memory, visibility, and cleanup in a real-time context.</li>
                 <li>Structured the project around a modular, performance-oriented architecture inspired by ECS patterns.</li>
-                <li>Documented technical decisions and implementation in a <a className="text-white underline underline-offset-2 decoration-white/80 hover:text-white/85" href="https://www.youtube.com/watch?v=-2z1FbOyCks" target="_blank" rel="noopener noreferrer">YouTube</a> breakdown.</li>
+                <li>Documented technical decisions and implementation in a <a className="xp-link" href="https://www.youtube.com/watch?v=-2z1FbOyCks" target="_blank" rel="noopener noreferrer">YouTube</a> breakdown.</li>
               </ul>
             </div>
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2024 - Sep 2024 • Aix-en-Provence, France</span>
-              <div className="mb-1 flex items-start justify-between gap-3">
+              <div className="xp-domain-row">
                 <h3 className="font-display font-bold text-xl text-white">Dassault Systèmes</h3>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Industry 5.0</span>
+                <span className="xp-domain-tag">Industry 5.0</span>
               </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D SE Intern • Additive Manufacturing</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
@@ -369,9 +370,9 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2023 - Jun 2023 • Marseille, France</span>
-              <div className="mb-1 flex items-start justify-between gap-3">
+              <div className="xp-domain-row">
                 <h3 className="font-display font-bold text-xl text-gray-200">LIS Lab</h3>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Research Lab</span>
+                <span className="xp-domain-tag">Research Lab</span>
               </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CG Researcher Intern • G-Mod Team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
@@ -387,9 +388,9 @@ const ExperienceSection = () => (
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2022 - Aug 2022 • La Ciotat, France</span>
-              <div className="mb-1 flex items-start justify-between gap-3">
+              <div className="xp-domain-row">
                 <h3 className="font-display font-bold text-xl text-gray-200">Iconik</h3>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-white border border-white/30 px-1.5 py-0.5 shrink-0">Video Game</span>
+                <span className="xp-domain-tag">Video Game</span>
               </div>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CMS Developer Intern • Communication team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
