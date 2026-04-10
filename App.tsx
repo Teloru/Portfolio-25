@@ -310,7 +310,7 @@ const ExperienceSection = () => (
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white rounded-full group-hover:scale-125 transition-transform" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Dec 2024 - today • Copenhagen, Denmark</span>
               <h3 className="font-display font-bold text-xl mb-1 text-white">H3D</h3>
-              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D SE • Dental R&D Team</p>
+              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D R&D SE • Dental R&D Team</p>
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Development of advanced 3D dental scanning solutions with a focus on geometric processing and mesh optimization applied to patient scans.
               </p>
@@ -327,22 +327,33 @@ const ExperienceSection = () => (
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Oct 2024 - Mar 2025 • Castelnau-le-Lez, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-gray-200">Ubisoft Montpellier</h3>
-              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">Mentee • Global Mentoring Program</p>
+              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">Programming Mentee • Global Mentoring Program</p>
+              <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
+                Participation in a mentorship program with Ubisoft, designed to support young talent in developing their programming skills. Developed a Tower Defense in C++ using <a className="text-white underline underline-offset-2 decoration-white/80 hover:text-white/85" target="_blank" rel="noopener noreferrer" href="https://www.sfml-dev.org/fr/">SFML</a>, focusing on real-time rendering logic and spatial representation in a pseudo-3D environment.</p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-                <li>Developed a Tower Defense in C++ using SFML, mentored by a Lead Gameplay Programmer at Ubisoft Montpellier. Designed a modular, performance-oriented architecture following ECS patterns and AAA industry standards.</li>
-                <li>Documented the project in a <a href="https://www.youtube.com/watch?v=-2z1FbOyCks" target='_blank'>YouTube video</a> covering technical design decisions and implementation.</li>
+                <li>Implemented an isometric rendering system using a 2D library (no engine), leveraging draw order and spatial sorting to simulate depth.</li>
+                <li>Designed a multi-orientation view system (4 camera rotations), dynamically recomputing scene layout and entity positioning based on player perspective.</li>
+                <li>Applied angle-based transformations and coordinate remapping to support seamless board rotation and consistent gameplay logic across views.</li>
+                <li>Managed dynamic entities (e.g. projectiles) with a lightweight lifecycle system, handling memory, visibility, and cleanup in a real-time context.</li>
+                <li>Structured the project around a modular, performance-oriented architecture inspired by ECS patterns.</li>
+                <li>Documented technical decisions and implementation in a <a className="text-white underline underline-offset-2 decoration-white/80 hover:text-white/85" href="https://www.youtube.com/watch?v=-2z1FbOyCks" target="_blank" rel="noopener noreferrer">YouTube</a> breakdown.</li>
               </ul>
             </div>
-            
             <div className="relative pl-8 group">
               <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-white/20 rounded-full group-hover:bg-white transition-colors" />
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2024 - Sep 2024 • Aix-en-Provence, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-white">Dassault Systèmes</h3>
-              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">SE Intern • Additive Manufacturing</p>
+              <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">3D SE Intern • Additive Manufacturing</p>
+              <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
+                Six-month graduation internship. Developed a customizable post-processing pipeline for generating machine-specific G-code within the 3DEXPERIENCE platform, bridging 3D model data and physical fabrication constraints.
+              </p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-                <li>Designed a G-code export feature compatible with multiple 3D printer models (Ultimaker, Raise3D).</li>
-                <li>Implemented a flexible UI for machine-specific printing parameters.</li>
-                <li>Coordinated remote testing with a team in Vélizy within an Agile Scrum environment.</li>
+                <li>Designed and implemented a G-code generation system supporting multiple 3D printers (Ultimaker, Raise3D...), translating geometric toolpaths into machine instructions.</li>
+                <li>Analyzed and adapted toolpath generation strategies (infill density, extrusion behavior, retraction) to mitigate manufacturing defects such as warping and material inconsistencies.</li>
+                <li>Reverse-engineered and handled printer-specific file formats (APT, G-code variants) to ensure compatibility across heterogeneous hardware.</li>
+                <li>Conducted visual debugging and analysis of 3D toolpaths, identifying limitations in internal software and contributing to pipeline improvements.</li>
+                <li>Built a flexible UI for configuring machine-dependent parameters, enabling real-time customization of fabrication settings.</li>
+                <li>Collaborated with cross-functional teams (including remote hardware teams in Vélizy's lab) to validate outputs on physical devices.</li>
               </ul>
             </div>
 
@@ -351,8 +362,11 @@ const ExperienceSection = () => (
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2023 - Jun 2023 • Marseille, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-gray-200">LIS Lab</h3>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CG Researcher Intern • G-Mod Team</p>
+              <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
+                Research internship project at LIS Lab using Reeb graphs and shape indexing (TTK library) to analyze 3D mesh topology for classification, segmentation, and simplification tasks.
+              </p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-                <li>Optimized topological extraction scripts on 3D shapes using TTK library.</li>
+                <li>Optimized topological extraction scripts on 3D shapes using TTK/VTK library.</li>
                 <li>Added support for STL and PLY formats and implemented segmentation filters.</li>
                 <li>Refactored C++ code, reducing compatibility errors by 30% and improving efficiency by 20%.</li>
               </ul>
@@ -363,9 +377,13 @@ const ExperienceSection = () => (
               <span className="font-mono text-[10px] text-white/50 mb-1 block">Apr 2022 - Aug 2022 • La Ciotat, France</span>
               <h3 className="font-display font-bold text-xl mb-1 text-gray-200">Iconik</h3>
               <p className="font-mono text-xs text-white/70 mb-3 bg-white/5 inline-block px-2 py-1 rounded">CMS Developer Intern • Communication team</p>
+              <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
+                Led development of Iconik's website (WordPress) for VR video game services
+              </p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-                <li>Led development of Iconik's website for VR video game services.</li>
                 <li>Reduced page load time by 25% through optimization.</li>
+                <li>Designed websites mockups and developed front-end components.</li>
+                <li>Created theme + back-end plugin system for easy customization.</li>
               </ul>
             </div>
 
