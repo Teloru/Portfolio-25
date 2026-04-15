@@ -7,9 +7,39 @@ import { ArrowRight, Github, Linkedin, Mail, Twitch, Coffee, MapPin, Download } 
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 
+const SECTION_BY_HASH: Record<string, SectionType> = {
+  home: SectionType.HOME,
+  engineering: SectionType.DEV,
+  dev: SectionType.DEV,
+  art: SectionType.ART,
+  stream: SectionType.STREAM,
+  twitch: SectionType.STREAM,
+  experiences: SectionType.XP,
+  experience: SectionType.XP,
+  xp: SectionType.XP,
+  contact: SectionType.CONTACT
+};
+
+const getSectionFromHash = (): SectionType => {
+  if (typeof window === 'undefined') {
+    return SectionType.HOME;
+  }
+
+  const rawHash = window.location.hash.replace(/^#/, '').toLowerCase();
+  return SECTION_BY_HASH[rawHash] ?? SectionType.HOME;
+};
+
 const App: React.FC = () => {
-  const [currentSection, setCurrentSection] = useState<SectionType>(SectionType.HOME);
+  const [currentSection, setCurrentSection] = useState<SectionType>(() => getSectionFromHash());
   const [selectedProject, setSelectedProject] = useState<typeof ART_PROJECTS[0] | null>(null);
+
+  useEffect(() => {
+    if (window.location.hash) {
+      // Keep deep-link support on first load, then restore a clean canonical URL.
+      const cleanUrl = `${window.location.pathname}${window.location.search}`;
+      window.history.replaceState(null, '', cleanUrl);
+    }
+  }, []);
 
   return (
     <div className="relative w-full min-h-screen bg-[#050505] text-white overflow-x-hidden flex font-sans selection:bg-white selection:text-black">
