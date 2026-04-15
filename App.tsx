@@ -3,9 +3,18 @@ import { SectionType } from './types';
 import Scene3D from './components/Cube3D';
 import GachaSystem from './components/GachaSystem';
 import { SECTIONS, DEV_PROJECTS, ART_PROJECTS } from './constants';
-import { ArrowRight, Github, Linkedin, Mail, Twitch, Coffee, MapPin, Download } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Twitch, Coffee, MapPin, Download, Link2, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
+
+const SECTION_HASH_BY_TYPE: Record<SectionType, string> = {
+  [SectionType.HOME]: 'home',
+  [SectionType.DEV]: 'engineering',
+  [SectionType.ART]: 'art',
+  [SectionType.STREAM]: 'stream',
+  [SectionType.XP]: 'experiences',
+  [SectionType.CONTACT]: 'contact'
+};
 
 const SECTION_BY_HASH: Record<string, SectionType> = {
   home: SectionType.HOME,
@@ -32,14 +41,56 @@ const getSectionFromHash = (): SectionType => {
 const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<SectionType>(() => getSectionFromHash());
   const [selectedProject, setSelectedProject] = useState<typeof ART_PROJECTS[0] | null>(null);
+  const [shareCopied, setShareCopied] = useState(false);
 
   useEffect(() => {
+    const syncSectionFromHash = () => {
+      const nextSection = getSectionFromHash();
+      setCurrentSection(nextSection);
+
+      if (window.location.hash) {
+        const cleanUrl = `${window.location.pathname}${window.location.search}`;
+        window.history.replaceState(null, '', cleanUrl);
+      }
+    };
+
+    window.addEventListener('hashchange', syncSectionFromHash);
+
     if (window.location.hash) {
-      // Keep deep-link support on first load, then restore a clean canonical URL.
-      const cleanUrl = `${window.location.pathname}${window.location.search}`;
-      window.history.replaceState(null, '', cleanUrl);
+      syncSectionFromHash();
     }
+
+    return () => window.removeEventListener('hashchange', syncSectionFromHash);
   }, []);
+
+  const getShareUrlForCurrentSection = () => {
+    const baseUrl = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+    return `${baseUrl}#${SECTION_HASH_BY_TYPE[currentSection]}`;
+  };
+
+  const copySectionLink = async () => {
+    const shareUrl = getShareUrlForCurrentSection();
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+
+      setShareCopied(true);
+      window.setTimeout(() => setShareCopied(false), 1800);
+    } catch {
+      setShareCopied(false);
+    }
+  };
 
   return (
     <div className="relative w-full min-h-screen bg-[#050505] text-white overflow-x-hidden flex font-sans selection:bg-white selection:text-black">
@@ -53,6 +104,28 @@ const App: React.FC = () => {
           AB.
         </h1>
       </div>
+
+      {/* Copy deep-link for the active section without mutating current URL */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`share-${currentSection}`}
+          initial={{ opacity: 0, y: -10, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -10, filter: 'blur(8px)' }}
+          transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
+          className="fixed top-8 right-12 z-50 hidden md:block"
+        >
+          <button
+            onClick={copySectionLink}
+            className="group inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/50 px-3 py-2 font-mono text-[10px] uppercase tracking-wide text-white/80 backdrop-blur hover:border-white/60 hover:text-white transition-colors"
+            aria-label="Copy link to current section"
+            title="Copy link to current section"
+          >
+            {shareCopied ? <Check size={13} /> : <Link2 size={13} />}
+            {shareCopied ? 'Link copied' : 'Share section'}
+          </button>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Floating Navigation - Left Center */}
       <nav className="fixed left-8 md:left-12 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-6">
