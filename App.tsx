@@ -319,7 +319,8 @@ const ExperienceSection = () => (
                 Development of advanced 3D dental scanning solutions with a focus on geometric processing and mesh optimization applied to patient scans.
               </p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-                <li>Lead developer for Models and Retainers products in the dental portfolio, driving algorithmic improvements (geometrical processing) through to production releases; presents products at international dental trade shows</li>
+                <li>Lead developer for Models and Retainers, designing production-grade 3D geometry pipelines from segmented dental scans to printable devices. Presents products at international dental trade shows</li>
+                <li>Implement surface generation, boolean, and normal-offset surface computation algorithms using PyMesh, libigl, Trimesh, and Shapely.</li>
                 <li>Led the Hugin project, reducing ML pipeline runtime by 5-10% by dynamically downloading model weights at runtime instead of embedding them in Docker images. This optimization accelerated CI/CD builds and cut execution time of large test sets by over an hour.</li>
                 <li>Coordinating Dental team releases and managed client account provisioning, ensuring smooth integration into production workflows.</li>
                 <li>Partnered closely with fullstack, AI, and product teams to align technical solutions with business objectives. </li>
@@ -338,7 +339,7 @@ const ExperienceSection = () => (
               <p className="text-xs text-gray-400 leading-relaxed font-light mb-2">
                 Participation in a mentorship program with Ubisoft, designed to support young talent in developing their programming skills. Developed a Tower Defense in C++ using <a className="xp-link" target="_blank" rel="noopener noreferrer" href="https://www.sfml-dev.org/fr/">SFML</a>, focusing on real-time rendering logic and spatial representation in a pseudo-3D environment.</p>
               <ul className="text-xs text-gray-400 leading-relaxed font-light list-disc pl-4 space-y-1 marker:text-white/30">
-                <li>Implemented an isometric rendering system using a 2D library (no engine), leveraging draw order and spatial sorting to simulate depth.</li>
+                <li>Implemented an isometric rendering system using SFML (no engine), leveraging draw order and spatial sorting to simulate depth.</li>
                 <li>Designed a multi-orientation view system (4 camera rotations), dynamically recomputing scene layout and entity positioning based on player perspective.</li>
                 <li>Applied angle-based transformations and coordinate remapping to support seamless board rotation and consistent gameplay logic across views.</li>
                 <li>Managed dynamic entities (e.g. projectiles) with a lightweight lifecycle system, handling memory, visibility, and cleanup in a real-time context.</li>
