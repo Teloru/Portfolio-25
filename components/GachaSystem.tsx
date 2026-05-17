@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Personality, PersonalityType } from '../types';
 import { Box, X, Sparkles, Trophy, ChevronLeft } from 'lucide-react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { motion, AnimatePresence, PanInfo, useTime, useTransform } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import GachaBox from './GachaBox';
@@ -34,17 +34,46 @@ const PERSONALITIES: Personality[] = [
   }
 ];
 
-const GachaTrigger3D = () => {
+interface GachaTrigger3DProps {
+  hoverShakeTrigger?: number;
+}
+
+const GachaTrigger3D: React.FC<GachaTrigger3DProps> = ({ hoverShakeTrigger = 0 }) => {
   const groupRef = React.useRef<THREE.Group>(null);
   const lidRef = React.useRef<THREE.Mesh>(null);
+  const shakeEndTimeMsRef = React.useRef(0);
+
+  useEffect(() => {
+    if (hoverShakeTrigger > 0) {
+      shakeEndTimeMsRef.current = performance.now() + 1000;
+    }
+  }, [hoverShakeTrigger]);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
 
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(t * 0.7) * 0.35;
-      groupRef.current.rotation.x = Math.cos(t * 0.5) * 0.08;
-      groupRef.current.position.y = Math.sin(t * 1.8) * 0.05;
+      const baseY = Math.sin(t * 0.7) * 0.35;
+      const baseX = Math.cos(t * 0.5) * 0.08;
+      const basePosY = Math.sin(t * 1.8) * 0.05;
+
+      const now = performance.now();
+      const shaking = now < shakeEndTimeMsRef.current;
+
+      if (shaking) {
+        const remaining = (shakeEndTimeMsRef.current - now) / 1000;
+        const envelope = Math.max(0, Math.min(1, remaining));
+        const shakeX = Math.sin(t * 30) * 0.02 * envelope;
+        const shakeY = Math.cos(t * 34) * 0.02 * envelope;
+        const shakePosY = Math.sin(t * 44) * 0.009 * envelope;
+        groupRef.current.rotation.y = baseY + shakeY;
+        groupRef.current.rotation.x = baseX + shakeX;
+        groupRef.current.position.y = basePosY + shakePosY;
+      } else {
+        groupRef.current.rotation.y = baseY;
+        groupRef.current.rotation.x = baseX;
+        groupRef.current.position.y = basePosY;
+      }
     }
 
   });
@@ -99,9 +128,13 @@ const GachaSystem: React.FC = () => {
   const [isOpening, setIsOpening] = useState(false);
   const [collected, setCollected] = useState<Set<PersonalityType>>(new Set());
   const [isNewUnlock, setIsNewUnlock] = useState(false);
+  const [desktopHoverShakeCount, setDesktopHoverShakeCount] = useState(0);
   const [isMobilePulling, setIsMobilePulling] = useState(false);
   const [mobilePullDistance, setMobilePullDistance] = useState(0);
   const mobilePullStartXRef = React.useRef<number | null>(null);
+  const time = useTime();
+  const idleDesktopY = useTransform(time, (t) => Math.sin(t / 950) * -4);
+  const idleDesktopRotate = useTransform(time, (t) => Math.sin(t / 700) * 1);
 
   // load collected from localStorage
   useEffect(() => {
@@ -177,17 +210,17 @@ const GachaSystem: React.FC = () => {
   return (
     <>
       <motion.button
-        animate={{ y: [0, -4, 0], rotate: [0, -1, 1, 0] }}
-        transition={{ duration: 2.6, ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.7 }}
-        whileHover={{ scale: 1.08, rotate: [0, -3, 3, -2, 2, 0], transition: { duration: 0.45 } }}
+        style={{ y: idleDesktopY, rotate: idleDesktopRotate }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.93, rotate: 0 }}
+        onHoverStart={() => setDesktopHoverShakeCount((prev) => prev + 1)}
         onClick={pullGacha}
         aria-label="Open mystery gacha box"
-        className="group fixed right-2 md:right-8 bottom-[calc(5.4rem+env(safe-area-inset-bottom))] md:bottom-8 z-50 hidden md:block md:h-[108px] md:w-[108px]"
+        className="group fixed right-2 md:right-4 bottom-[calc(5.4rem+env(safe-area-inset-bottom))] md:bottom-8 z-50 hidden md:block md:h-[92px] md:w-[92px]"
       >
         <div className="h-full w-full">
           <Canvas camera={{ position: [0, 0, 4.2], fov: 32 }} dpr={[1, 1.8]}>
-            <GachaTrigger3D />
+            <GachaTrigger3D hoverShakeTrigger={desktopHoverShakeCount} />
           </Canvas>
         </div>
       </motion.button>
