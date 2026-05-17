@@ -8,16 +8,18 @@ interface SceneProps {
   currentSection: SectionType;
 }
 
-const isMobile = () =>
-  typeof window !== 'undefined' &&
-  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+const shouldUseGyro = () => {
+  if (typeof window === 'undefined') return false;
+  // Treat as mobile/gyro only on coarse pointers without hover capability.
+  return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+};
 
 const GeometricForm = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const wireframeRef = useRef<THREE.Mesh>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const gyroRef = useRef({ x: 0, y: 0 });
-  const mobile = isMobile();
+  const mobile = shouldUseGyro();
   const { viewport } = useThree();
   
   // Responsive scale
