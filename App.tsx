@@ -3,6 +3,7 @@ import { SectionType } from './types';
 import Scene3D from './components/Cube3D';
 import GachaSystem from './components/GachaSystem';
 import { SECTIONS, DEV_PROJECTS, ART_PROJECTS } from './constants';
+import { FEATURED_YOUTUBE_VIDEOS } from './content/featuredVideos';
 import { ArrowRight, Github, Linkedin, Mail, Twitch, Coffee, MapPin, Download, Link2, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
@@ -547,30 +548,6 @@ const ExperienceSection = () => (
       </div>
    </div>
 );
-
-const FEATURED_YOUTUBE_VIDEOS = [
-  {
-    id: 'rayman-30th-reverse-engineering',
-    title: 'Rayman 30th: The Internet Got It Wrong',
-    description: 'I explain why this release is much more than simple emulation by breaking down the technical choices behind it.',
-    thumbnail: 'https://img.youtube.com/vi/jU6bSHefllQ/hqdefault.jpg',
-    link: 'https://www.youtube.com/watch?v=jU6bSHefllQ'
-  },
-  {
-    id: 'jsr-prototype-analysis',
-    title: 'Jet Set Radio Prototype & the US Grind Radio – Game Preservation ',
-    description: 'A guided analysis of the JSR prototype, including what it reveals about development decisions and cut content.',
-    thumbnail: 'https://img.youtube.com/vi/ngTHrhJjtLs/hqdefault.jpg',
-    link: 'https://www.youtube.com/watch?v=ngTHrhJjtLs&t=13s'
-  },
-  {
-    id: 'ubisoft-mentorship-talk',
-    title: 'Ubisoft Mentored Me. I Made This UNLIKELY Game',
-    description: 'I talk about my Ubisoft mentorship journey, the challenges, and the professional growth that came with it.',
-    thumbnail: 'https://img.youtube.com/vi/-2z1FbOyCks/hqdefault.jpg',
-    link: 'https://www.youtube.com/watch?v=-2z1FbOyCks&t=10s'
-  }
-];
 
 const StreamSection = () => (
   <div className="w-full pb-20 pt-10 md:pt-0">
