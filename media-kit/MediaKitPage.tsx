@@ -16,8 +16,8 @@ function SectionHeading({ number, id, children }: { number: string; id: string; 
   return <div className="mk-heading"><span>{number} //</span><h2 id={id}>{children}</h2></div>;
 }
 
-function SnapshotDate() {
-  return <time dateTime={mediaKit.snapshot.date}>{mediaKit.snapshot.label}</time>;
+function SnapshotDate({ snapshot = mediaKit.snapshot }: { snapshot?: { date: string; label: string } }) {
+  return <time dateTime={snapshot.date}>{snapshot.label}</time>;
 }
 
 function FeatureCard({ item, index }: { item: MediaKitFeature; index: number }) {
@@ -55,12 +55,12 @@ export default function MediaKitPage() {
 
       <section className="mk-section" aria-labelledby="reach-title">
         <SectionHeading number="01" id="reach-title">Audience & reach</SectionHeading>
-        <p className="mk-note">Stats recorded on <SnapshotDate />. This is a fixed snapshot and is not updated automatically.</p>
+        <p className="mk-note">Recording dates are shown on each card. These figures are fixed snapshots and are not updated automatically.</p>
         <div className="mk-metrics">{mediaKit.reach.map(channel => <article className="mk-card mk-platform-card" key={channel.platform}>
-          <h3><ExternalLink href={mediaKit.socials.find(social => social.name === channel.platform)!.url} className="mk-platform-link">{channel.platform}</ExternalLink></h3><p className="mk-period">{channel.period}<br />Recorded <SnapshotDate /></p>
+          <h3><ExternalLink href={mediaKit.socials.find(social => social.name === channel.platform)!.url} className="mk-platform-link">{channel.platform}</ExternalLink></h3><p className="mk-period">{channel.period}<br />Recorded <SnapshotDate snapshot={channel.snapshot} /></p>
           <dl>{channel.metrics.map((metric, index) => <div className={index === 0 ? 'mk-main-stat' : 'mk-stat'} key={`${metric.label}-${index}`}><dt>{metric.label}</dt><dd>{metric.value}</dd></div>)}</dl>
         </article>)}</div>
-        <p className="mk-note">Follower and subscriber counts are as recorded on that date. Activity figures cover each platform's reporting window at the time of the snapshot, not today's date. Figures are not combined across platforms.</p>
+        <p className="mk-note">Follower and subscriber counts are as recorded on each card's date. Activity figures cover each platform's reporting window at the time of the snapshot, not today's date. Figures are not combined across platforms.</p>
       </section>
 
       <section className="mk-section" aria-labelledby="audience-title">
@@ -69,13 +69,13 @@ export default function MediaKitPage() {
         <div className="mk-audience-grid"><div className="mk-card mk-geography"><h3>{mediaKit.audience.title}</h3><p className="mk-period">{mediaKit.audience.period}<br />Recorded <SnapshotDate /></p>
           <ul className="mk-bars">{mediaKit.audience.countries.map(country => <li key={country.name}><div><span>{country.name}</span><strong>{country.percent}%</strong></div><div className="mk-track" aria-hidden="true"><span style={{ width: `${country.percent}%` }} /></div></li>)}</ul>
           <p className="mk-note">Based on video views, not unique viewers.</p>
-        </div><aside className="mk-card mk-age"><p className="mk-eyebrow">TIKTOK // FOLLOWERS</p><strong>{mediaKit.audience.tiktok.percent}</strong><p>of my TikTok followers are between <b>{mediaKit.audience.tiktok.ages} years old.</b></p><p className="mk-note">Recorded <SnapshotDate /></p></aside></div>
+        </div><aside className="mk-card mk-age"><p className="mk-eyebrow">{mediaKit.audience.age.platform.toUpperCase()} // AGE BY VIEWS</p><strong>{mediaKit.audience.age.percent}</strong><p>of my YouTube views come from viewers aged <b>{mediaKit.audience.age.ages}.</b></p><p className="mk-note">{mediaKit.audience.period}<br />Recorded <SnapshotDate /></p></aside></div>
       </section>
 
       <section id="work" className="mk-section" aria-labelledby="work-title">
         <SectionHeading number="03" id="work-title">Selected content</SectionHeading>
         <div className="mk-features">{mediaKit.featured.map((item, index) => <FeatureCard key={item.title} item={item} index={index} />)}</div>
-        <aside className="mk-reel"><div><p className="mk-eyebrow">INSTAGRAM // REEL</p><p>Top-performing Instagram Reel · {mediaKit.reel.period}</p><p className="mk-note">Views recorded on <SnapshotDate /></p></div><strong>{mediaKit.reel.views} <span>views</span></strong>{mediaKit.reel.url ? <ExternalLink href={mediaKit.reel.url}>Watch Reel</ExternalLink> : <span className="mk-note">Reel link pending</span>}</aside>
+        <aside className="mk-reel"><div><p className="mk-eyebrow">INSTAGRAM // REEL</p><p>Top-performing Instagram Reel · Published {mediaKit.reel.published}</p><p className="mk-note">Views recorded on <SnapshotDate /></p></div><strong>{mediaKit.reel.views} <span>views</span></strong>{mediaKit.reel.url ? <ExternalLink href={mediaKit.reel.url}>Watch Reel</ExternalLink> : <span className="mk-note">Reel link pending</span>}</aside>
       </section>
 
       <section className="mk-section" aria-labelledby="collaborate-title">
@@ -86,7 +86,10 @@ export default function MediaKitPage() {
 
       <section className="mk-section" aria-labelledby="experience-title">
         <SectionHeading number="05" id="experience-title">Brand experience</SectionHeading>
-        <article className="mk-card mk-experience"><div><p className="mk-eyebrow">UNPAID PRODUCT COLLABORATION</p><h3>XP-PEN <span>Product collaboration</span></h3></div><p>XP-PEN sent me a graphics tablet to try out, and I later gave it away to my community. It wasn't a paid partnership: I got to test the product, share it with my audience and organise the giveaway.</p></article>
+        {mediaKit.brandExperience.map(brand => <article className="mk-card mk-experience" key={brand.name}>
+          <div><p className="mk-eyebrow">{brand.status}</p><h3>{brand.name}<span>{brand.format}</span></h3></div>
+          <p>{brand.description}</p>
+        </article>)}
       </section>
 
       <section id="contact" className="mk-contact" aria-labelledby="contact-title"><p className="mk-eyebrow">CONTACT</p><h2 id="contact-title">Let's create<br />something together<span>!</span></h2><a className="mk-email" href={`mailto:${mediaKit.email}`}>{mediaKit.email}<ArrowUpRight aria-hidden="true" /></a><SocialLinks /></section>

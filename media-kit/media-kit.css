@@ -99,6 +99,7 @@ body { margin: 0; min-width: 320px; -webkit-font-smoothing: antialiased; }
 .mk-formats li:first-child { padding-top: 0; }
 .mk-formats span { color: var(--mk-accent); }
 .mk-experience { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; align-items: center; }
+.mk-experience + .mk-experience { border-top: 1px solid var(--mk-line); }
 .mk-experience h3 { font-size: 1.5rem; }
 .mk-experience h3 span { display: block; font: .8rem/1.8 var(--mk-mono); color: var(--mk-muted); margin-top: .5rem; }
 .mk-experience > p { font-size: .9rem; }
@@ -129,7 +130,7 @@ body { margin: 0; min-width: 320px; -webkit-font-smoothing: antialiased; }
   .mk-intro, .mk-audience-grid, .mk-features, .mk-collab, .mk-experience { grid-template-columns: 1fr; gap: 1.25rem; }
   .mk-intro { gap: 1rem; }
   .mk-section { padding: 2.5rem 0; }
-  .mk-metrics { gap: .65rem; }
+  .mk-metrics { grid-template-columns: 1fr; gap: .65rem; }
   .mk-metrics .mk-card { padding: 1rem; }
   .mk-stat { flex-direction: column-reverse; gap: .25rem; }
   .mk-heading { gap: .7rem; }
